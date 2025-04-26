@@ -1,0 +1,9 @@
+{
+  "admins": [
+    {
+      "username": "admin123",
+      "password": "123",
+      "email": "admin@swiftbites.com"
+    }
+  ]
+} 

@@ -1,0 +1,1798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SWIFTBITES - Indian Cuisine</title>
+
+  <!-- Import Poppins and Baloo Bhaina 2 fonts -->
+  <link rel="stylesheet" href="styles1.css">
+  
+  <!-- React and ReactDOM CDN -->
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  
+  <!-- Babel for JSX -->
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+  <!-- Custom JavaScript files -->
+  <script src="header-section.js"></script>
+  <script src="hero-section.js"></script>
+  <script src="about-section.js"></script>
+  <script src="menu-section.js"></script>
+
+  <!-- React Components -->
+  <script type="text/babel" src="components/Header.jsx"></script>
+  <script type="text/babel" src="components/About.jsx"></script>
+  <script type="text/babel" src="components/Hero.jsx"></script>
+  <script type="text/babel" src="components/Menu.jsx"></script>
+
+  <style>
+    /* Add these new animation styles */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes scaleIn {
+      from {
+        transform: scale(0.95);
+        opacity: 0;
+      }
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.05);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    @keyframes slideInRight {
+      from {
+        transform: translateX(100px);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    /* Apply animations to elements */
+    .dish-card {
+      animation: fadeInUp 0.5s ease-out forwards;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .dish-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+
+    .hero-text {
+      animation: slideInRight 0.8s ease-out forwards;
+    }
+
+    .hero-image {
+      animation: scaleIn 0.8s ease-out forwards;
+    }
+
+    .orange-btn, .black-btn {
+      animation: pulse 2s infinite;
+      transition: transform 0.3s ease;
+    }
+
+    .orange-btn:hover, .black-btn:hover {
+      transform: scale(1.1);
+    }
+
+    .quantity-btn {
+      width: 35px;
+      height: 35px;
+      border: none;
+      border-radius: 4px;
+      background: #f7931e;
+      color: white;
+      font-size: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .quantity-btn:hover {
+      background: #e67e00;
+      transform: scale(1.1);
+    }
+
+    .quantity-btn:active {
+      transform: scale(0.95);
+    }
+
+    .quantity-btn::after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: rgba(255,255,255,0.2);
+      border-radius: 50%;
+      transform: scale(0);
+      transition: transform 0.3s ease;
+    }
+
+    .quantity-btn:active::after {
+      transform: scale(2);
+    }
+
+    .quantity-display {
+      font-size: 18px;
+      font-weight: 500;
+      min-width: 30px;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .quantity-display.changed {
+      transform: scale(1.2);
+      color: #f7931e;
+    }
+
+    .add-to-cart-btn {
+      width: 100%;
+      padding: 12px;
+      background: #f7931e;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .add-to-cart-btn:hover {
+      background: #e67e00;
+      transform: translateY(-2px);
+    }
+
+    .add-to-cart-btn:active {
+      transform: translateY(0);
+    }
+
+    .add-to-cart-btn::after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: rgba(255,255,255,0.2);
+      border-radius: 50%;
+      transform: scale(0);
+      transition: transform 0.3s ease;
+    }
+
+    .add-to-cart-btn:active::after {
+      transform: scale(2);
+    }
+
+    /* Enhanced modal animations */
+    .modal {
+      animation: scaleIn 0.3s ease-out forwards;
+    }
+
+    .fade-in {
+      animation: fadeInUp 0.5s ease-out forwards;
+    }
+
+    /* Add staggered animation for dish cards */
+    .dish-grid .dish-card:nth-child(1) { animation-delay: 0.1s; }
+    .dish-grid .dish-card:nth-child(2) { animation-delay: 0.2s; }
+    .dish-grid .dish-card:nth-child(3) { animation-delay: 0.3s; }
+    .dish-grid .dish-card:nth-child(4) { animation-delay: 0.4s; }
+
+    /* Add hover effect for review cards */
+    .review-card {
+      transition: transform 0.3s ease;
+    }
+
+    .review-card:hover {
+      transform: translateY(-10px);
+    }
+
+    /* Add loading animation for images */
+    .dish-card img {
+      transition: transform 0.3s ease;
+    }
+
+    .dish-card:hover img {
+      transform: scale(1.1);
+    }
+
+    /* Add page transition styles */
+    body {
+      transition: opacity 0.3s ease;
+    }
+
+    /* Navigation styles */
+    nav a {
+      transition: all 0.3s ease;
+      display: inline-block;
+      padding: 5px 10px;
+      border-radius: 5px;
+    }
+
+    nav a:hover {
+      background-color: #fff;
+      color: #f7931e;
+    }
+
+    /* Active navigation link */
+    nav a.active {
+      background-color: #fff;
+      color: #f7931e;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        color: #333;
+        font-weight: 500;
+    }
+
+    .form-group input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 16px;
+    }
+
+    .error-message {
+        color: #ff4444;
+        font-size: 14px;
+        margin-top: 5px;
+        display: none;
+    }
+
+    .action-btn {
+        width: 100%;
+        padding: 12px;
+        background: #ff8c00;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .action-btn:hover {
+        background: #ff6b00;
+        transform: translateY(-2px);
+    }
+
+    /* Update quantity control styles */
+    .quantity-controls {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        margin-top: 15px;
+        flex-direction: column;
+    }
+
+    .quantity-selector {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 8px;
+    }
+
+    /* Add popup message styles */
+    .popup-message {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: #4CAF50;
+        color: white;
+        padding: 15px 25px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        z-index: 9999;
+        font-weight: 500;
+        min-width: 200px;
+        text-align: center;
+        animation: slideInRight 0.3s ease-out, fadeOut 0.3s ease-out 2.7s forwards;
+        display: none;
+    }
+
+    @keyframes slideInRight {
+        from {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+
+    @keyframes fadeOut {
+        from {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        to {
+            opacity: 0;
+            transform: translateX(100%);
+        }
+    }
+
+    /* Add styles for price box in popular dishes */
+    .price-box {
+        background: #fff;
+        border: 2px solid #f7931e;
+        border-radius: 8px;
+        padding: 5px 15px;
+        margin: 10px auto;
+        display: inline-block;
+        font-weight: 600;
+        color: #f7931e;
+        font-size: 1.1rem;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+    }
+
+    .price-box:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        background: #f7931e;
+        color: white;
+    }
+
+    .price-box::before {
+        content: '₹';
+        margin-right: 2px;
+        font-size: 0.9rem;
+    }
+
+    /* Profile Icon Styles */
+    .profile-icon {
+        display: none;
+        position: relative;
+        margin-left: 20px;
+        cursor: pointer;
+        z-index: 1000;
+        transition: all 0.3s ease;
+    }
+
+    .profile-image {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: #fff;
+        position: relative;
+        overflow: hidden;
+        border: 2px solid #f7931e;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .profile-image:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    }
+
+    .profile-dropdown {
+        display: none;
+        position: absolute;
+        top: 120%;
+        right: 0;
+        width: 220px;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        padding: 12px 0;
+        margin-top: 5px;
+        opacity: 0;
+        transform: translateY(-10px);
+        transition: all 0.3s ease;
+    }
+
+    .profile-dropdown.show {
+        display: block;
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .dropdown-header {
+        padding: 12px 16px;
+        border-bottom: 1px solid #eee;
+        margin-bottom: 8px;
+    }
+
+    .user-info {
+        margin-top: 8px;
+    }
+
+    .username {
+        font-weight: 600;
+        color: #333;
+        font-size: 1.1em;
+        display: block;
+    }
+
+    .role {
+        color: #666;
+        font-size: 0.9em;
+        display: block;
+        margin-top: 2px;
+    }
+
+    .dropdown-item {
+        padding: 10px 16px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: #333;
+        text-decoration: none;
+        transition: all 0.2s ease;
+    }
+
+    .dropdown-item:hover {
+        background-color: #f8f8f8;
+        color: #f7931e;
+    }
+
+    .dropdown-item i {
+        font-size: 1.1em;
+        color: #666;
+    }
+
+    .dropdown-divider {
+        height: 1px;
+        background: #eee;
+        margin: 8px 0;
+    }
+
+    /* Animation for profile icon appearance */
+    @keyframes profileIconAppear {
+        from {
+            opacity: 0;
+            transform: scale(0.8);
+        }
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+    .profile-icon.show {
+        display: block;
+        animation: profileIconAppear 0.3s ease forwards;
+    }
+
+    .auth {
+        display: flex;
+        gap: 10px;
+    }
+
+    .auth button {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      color: #fff;
+    }
+
+    .sign-up {
+      background: #f7931e;
+    }
+
+    .login {
+      background: #333;
+    }
+
+    .auth button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    .popular-btn {
+      background: #ff6b6b !important;
+      color: white !important;
+    }
+
+    .popular-btn:hover {
+      background: #ff5252 !important;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    /* Add styles for server connection UI */
+    .server-status {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        padding: 10px 15px;
+        border-radius: 8px;
+        font-weight: 500;
+        z-index: 10000;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    .server-status.connected {
+        background: #4CAF50;
+        color: white;
+    }
+    .server-status.disconnected {
+        background: #ff4444;
+        color: white;
+    }
+    .server-status.connecting {
+        background: #ff9800;
+        color: white;
+    }
+    .retry-button {
+        background: white;
+        color: inherit;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: 500;
+        transition: all 0.2s ease;
+    }
+    .retry-button:hover {
+        transform: scale(1.05);
+    }
+    .retry-button:active {
+        transform: scale(0.95);
+    }
+    @keyframes spin {
+        to { transform: rotate(360deg); }
+    }
+    .loading-spinner {
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        border: 2px solid white;
+        border-top-color: transparent;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+    }
+  </style>
+</head>
+<body>
+    <!-- React root elements -->
+    <div id="header-root"></div>
+    <div id="hero-root"></div>
+    <div id="about-root"></div>
+    <div id="menu-root"></div>
+
+    <!-- TOP NAV -->
+    <header class="top-nav">
+      <div class="logo">🍛 SWIFTBITES</div>
+      <nav>
+        <a href="./test1.html">Home</a>
+        <a href="./Menupage.html">Menu</a>
+        <a href="./OrderSummarypage.html">Order Summary</a>
+        <a href="./checkoutpage.html">Checkout</a>
+      </nav>
+      <div class="auth">
+        <button class="sign-up" onclick="openRegisterModal()">Sign Up</button>
+        <button class="login" onclick="openLoginModal()">Login</button>
+      </div>
+      <div class="profile-icon" id="profileIcon">
+        <div class="profile-image">
+            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxwYXRoIGQ9Ik0yMCAyMXYtMmE0IDQgMCAwIDAtNC00SDhhNCA0IDAgMCAwLTQgNHYyIj48L3BhdGg+PGNpcmNsZSBjeD0iMTIiIGN5PSI3IiByPSI0Ij48L2NpcmNsZT48L3N2Zz4=" alt="Default Profile" class="default-icon">
+            <div class="status-indicator"></div>
+        </div>
+        <div class="profile-dropdown" id="profileDropdown">
+            <div class="dropdown-header">
+                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxwYXRoIGQ9Ik0yMCAyMXYtMmE0IDQgMCAwIDAtNC00SDhhNCA0IDAgMCAwLTQgNHYyIj48L3BhdGg+PGNpcmNsZSBjeD0iMTIiIGN5PSI3IiByPSI0Ij48L2NpcmNsZT48L3N2Zz4=" alt="Profile" class="dropdown-profile-img">
+                <div class="user-info">
+                    <span class="username" id="dropdownUsername">Admin</span>
+                    <span class="role">Administrator</span>
+                </div>
+            </div>
+            <div class="dropdown-divider"></div>
+            <a href="#" class="dropdown-item">
+                <i class="fas fa-user"></i>
+                Profile Settings
+            </a>
+            <a href="#" onclick="logout()" class="dropdown-item">
+                <i class="fas fa-sign-out-alt"></i>
+                Logout
+            </a>
+        </div>
+      </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+      <div class="hero-text">
+        <!-- Single line "Indian Cuisine" with Baloo Bhaina 2 font -->
+        <h1 class="main-title">Indian Cuisine</h1>
+        <p>
+          Our chefs bring you an unforgettable dining experience with dishes crafted 
+          from traditional recipes, fresh ingredients, and regional flavors 
+          that celebrate India's culinary heritage.
+        </p>
+        <div class="hero-buttons">
+          <button class="orange-btn" onclick="location.href='Menupage.html'">Our Menu</button>
+
+        </div>
+      </div>
+      <div class="hero-image">
+        <img class="main-img" src="https://www.foodandwine.com/thmb/HVbJsZlSG7BQF1mif2Z5tZICM8g=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Buttermilk-Pancakes-FT-RECIPE1222-5589088e52c94e6f8a610b4393196fbb.jpg" alt="Main Dish"/>
+      </div>
+    </section>
+
+    <!-- POPULAR DISHES -->
+    <section class="popular-dishes">
+      <h2>POPULAR DISHES</h2>
+      <div class="dish-grid">
+        <div class="dish-card">
+          <img src="https://www.eatingwell.com/thmb/CcLY-9Ru3OWpd5k_V-hoxlk4whg=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/chopped-power-salad-with-chicken-hero-1x1-0178-475bbf1bbd884d5d97fc236b8975dff2.jpg" alt="Salad"/>
+          <h4>Salad</h4>
+          <p>10 mins</p>
+          <p class="stars">★★★★★</p>
+          <div class="price-box">747</div>
+          <div class="quantity-controls">
+            <div class="quantity-selector">
+                <button class="quantity-btn minus-btn" onclick="changeQuantity('salad-popular', -1, 747)">-</button>
+                <span class="quantity-display" id="quantity-salad-popular">0</span>
+                <button class="quantity-btn plus-btn" onclick="changeQuantity('salad-popular', 1, 747)">+</button>
+            </div>
+            <button class="add-to-cart-btn" onclick="add('salad-popular', 747)">Add</button>
+          </div>
+        </div>
+        <div class="dish-card">
+          <img src="https://www.allrecipes.com/thmb/nfsxdMIw15rqnVtl5LllGZe0KkY=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/40399-The-Best-Meatballs-ddmfs-4x3-080-858db61ac9d645b4880adf6417035ad0.jpg" alt="Meatballs"/>
+          <h4>Meatballs</h4>
+          <p>10 mins</p>
+          <p class="stars">★★★★☆</p>
+          <div class="price-box">871</div>
+          <div class="quantity-controls">
+            <div class="quantity-selector">
+                <button class="quantity-btn minus-btn" onclick="changeQuantity('meatballs-popular', -1, 871)">-</button>
+                <span class="quantity-display" id="quantity-meatballs-popular">0</span>
+                <button class="quantity-btn plus-btn" onclick="changeQuantity('meatballs-popular', 1, 871)">+</button>
+            </div>
+            <button class="add-to-cart-btn" onclick="add('meatballs-popular', 871)">Add</button>
+          </div>
+        </div>
+        <div class="dish-card">
+          <img src="https://images.unsplash.com/photo-1571091718767-18b5b1457add?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fGJ1cmdlcnxlbnwwfHwwfHx8MA%3D%3D" alt="Burger"/>
+          <h4>Burger</h4>
+          <p>10 mins</p>
+          <p class="stars">★★★★☆</p>
+          <div class="price-box">994</div>
+          <div class="quantity-controls">
+            <div class="quantity-selector">
+                <button class="quantity-btn minus-btn" onclick="changeQuantity('burger-popular', -1, 994)">-</button>
+                <span class="quantity-display" id="quantity-burger-popular">0</span>
+                <button class="quantity-btn plus-btn" onclick="changeQuantity('burger-popular', 1, 994)">+</button>
+            </div>
+            <button class="add-to-cart-btn" onclick="add('burger-popular', 994)">Add</button>
+          </div>
+        </div>
+        <div class="dish-card">
+          <img src="https://static.toiimg.com/thumb/54659021.cms?imgsize=275086&width=800&height=800" alt="Fries"/>
+          <h4>French Fries</h4>
+          <p>10 mins</p>
+          <p class="stars">★★★★☆</p>
+          <div class="price-box">456</div>
+          <div class="quantity-controls">
+            <div class="quantity-selector">
+                <button class="quantity-btn minus-btn" onclick="changeQuantity('fries-popular', -1, 456)">-</button>
+                <span class="quantity-display" id="quantity-fries-popular">0</span>
+                <button class="quantity-btn plus-btn" onclick="changeQuantity('fries-popular', 1, 456)">+</button>
+            </div>
+            <button class="add-to-cart-btn" onclick="add('fries-popular', 456)">Add</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT US -->
+    <section class="about">
+      <div class="about-image">
+        <img
+          class="about-img"
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Pizza-3007395.jpg/800px-Pizza-3007395.jpg"
+          alt="About SWIFTBITES"
+        />
+      </div>
+      <div class="about-text">
+        <h2>About Us</h2>
+        <p>
+          Welcome to <strong>SWIFTBITES</strong>, your one-stop destination for a world of flavors—
+          delivered right to your doorstep. Whether you crave the comfort of home-style Indian dishes,
+          the zest of Mexican street food, or the classic taste of Italian pasta, our platform curates a
+          variety of cuisines to satisfy every appetite. We're passionate about bringing you premium-quality
+          meals at <strong>affordable prices</strong>, ensuring that great food and convenience are always 
+          within reach.
+        </p>
+        <button class="black-btn">Our Menu</button>
+      </div>
+    </section>
+
+    <!-- DISCOVER SECTION -->
+    <section class="discover">
+      <div class="discover-text">
+        <h2>Discover the True Meaning <br>Of Taste</h2>
+        <p>
+          From the fiery tandoori grills to the rich, slow-cooked curries, our kitchen serves up a 
+          celebration of India's vibrant culinary heritage. Every bite is a blend of spice, soul, 
+          and tradition.
+        </p>
+        <!-- Corrected text to "Book an Order" -->
+        <button class="black-btn">BOOK AN ORDER</button>
+      </div>
+      <div class="hero-image">
+        <img class="discover-img" 
+             src="https://media.istockphoto.com/id/485040276/photo/herb-omelette-with-chives-and-oregano.jpg?s=612x612&w=0&k=20&c=gWzwd_-neHOmCgirxaaGCwEJElbuYPzY917oWPWp6kI= "alt="Discover Image"/>
+      </div>
+    </section>
+
+    <!-- FEATURED DISHES -->
+    <section class="featured-dishes">
+      <h2>Features Dishes</h2>
+      <div class="dishes-grid">
+        <!-- Dish Cards -->
+        <div class="dish-card">
+          <img src="https://content.jdmagicbox.com/v2/comp/greater_noida/x2/011pxx11.xx11.240817212309.f6x2/catalogue/roms-pizza-greater-noida-pizza-outlets-23j3m447da.jpg" alt="Pizza">
+          <h3>Pizza</h3>
+          <p><strong>10 mins</strong></p>
+          <div class="rating">★★★★★</div>
+          <div class="price-box">1,078</div>
+          <div class="quantity-controls">
+            <div class="quantity-selector">
+                <button class="quantity-btn minus-btn" onclick="changeQuantity('pizza-featured', -1, 1078)">-</button>
+                <span class="quantity-display" id="quantity-pizza-featured">0</span>
+                <button class="quantity-btn plus-btn" onclick="changeQuantity('pizza-featured', 1, 1078)">+</button>
+            </div>
+            <button class="add-to-cart-btn" onclick="add('pizza-featured', 1078)">Add</button>
+          </div>
+        </div>
+    
+        <div class="dish-card">
+          <img src="https://images.immediate.co.uk/production/volatile/sites/30/2013/05/Cheeseburger-3d7c922.jpg?quality=90&resize=556,505" alt="Burger">
+          <h3>Burger</h3>
+          <p><strong>10 mins</strong></p>
+          <div class="rating">★★★★☆</div>
+          <div class="price-box">994</div>
+          <div class="quantity-controls">
+            <div class="quantity-selector">
+                <button class="quantity-btn minus-btn" onclick="changeQuantity('burger-featured', -1, 994)">-</button>
+                <span class="quantity-display" id="quantity-burger-featured">0</span>
+                <button class="quantity-btn plus-btn" onclick="changeQuantity('burger-featured', 1, 994)">+</button>
+            </div>
+            <button class="add-to-cart-btn" onclick="add('burger-featured', 994)">Add</button>
+          </div>
+        </div>
+    
+        <div class="dish-card">
+          <img src="https://www.eatingwell.com/thmb/xzR1INWu-qKNgOqwG4cIMERqsMo=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/eat-the-rainbow-chopped-salad-with-basil-mozzarella-beauty-184-278133-4000x4000-ef8f3f0ad7134d2b860c51f5e7b38ce5.jpg" alt="Salad">
+          <h3>Salad</h3>
+          <p><strong>10 mins</strong></p>
+          <div class="rating">★★★★☆</div>
+          <div class="price-box">747</div>
+          <div class="quantity-controls">
+            <div class="quantity-selector">
+                <button class="quantity-btn minus-btn" onclick="changeQuantity('salad-featured', -1, 747)">-</button>
+                <span class="quantity-display" id="quantity-salad-featured">0</span>
+                <button class="quantity-btn plus-btn" onclick="changeQuantity('salad-featured', 1, 747)">+</button>
+            </div>
+            <button class="add-to-cart-btn" onclick="add('salad-featured', 747)">Add</button>
+          </div>
+        </div>
+    
+        <div class="dish-card">
+          <img src="https://images.immediate.co.uk/production/volatile/sites/30/2020/08/caramelised-onion-thyme-sausage-rolls-1ac2081.jpg?quality=90&resize=440,400" alt="Pastry">
+          <h3>Pastry</h3>
+          <p><strong>10 mins</strong></p>
+          <div class="rating">★★★★★</div>
+          <div class="price-box">414</div>
+          <div class="quantity-controls">
+            <div class="quantity-selector">
+                <button class="quantity-btn minus-btn" onclick="changeQuantity('pastry-featured', -1, 414)">-</button>
+                <span class="quantity-display" id="quantity-pastry-featured">0</span>
+                <button class="quantity-btn plus-btn" onclick="changeQuantity('pastry-featured', 1, 414)">+</button>
+            </div>
+            <button class="add-to-cart-btn" onclick="add('pastry-featured', 414)">Add</button>
+          </div>
+        </div>
+    
+        <div class="dish-card">
+          <img src="https://joyfoodsunshine.com/wp-content/uploads/2018/05/best-easy-french-toast-recipe-4.jpg" alt="French Toast">
+          <h3>French Fruits</h3>
+          <p><strong>10 mins</strong></p>
+          <div class="rating">★★★★★</div>
+          <div class="price-box">539</div>
+          <div class="quantity-controls">
+            <div class="quantity-selector">
+                <button class="quantity-btn minus-btn" onclick="changeQuantity('french-fruits-featured', -1, 539)">-</button>
+                <span class="quantity-display" id="quantity-french-fruits-featured">0</span>
+                <button class="quantity-btn plus-btn" onclick="changeQuantity('french-fruits-featured', 1, 539)">+</button>
+            </div>
+            <button class="add-to-cart-btn" onclick="add('french-fruits-featured', 539)">Add</button>
+          </div>
+        </div>
+    
+        <div class="dish-card">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSA3laMMz-fl4eAuvWLTqJai9fC-PvUSZxfOw&s" alt="Pesto Pasta Salad">
+          <h3>Pesto Salad</h3>
+          <p><strong>10 mins</strong></p>
+          <div class="rating">★★★★☆</div>
+          <div class="price-box">771</div>
+          <div class="quantity-controls">
+            <div class="quantity-selector">
+                <button class="quantity-btn minus-btn" onclick="changeQuantity('pesto-salad-featured', -1, 771)">-</button>
+                <span class="quantity-display" id="quantity-pesto-salad-featured">0</span>
+                <button class="quantity-btn plus-btn" onclick="changeQuantity('pesto-salad-featured', 1, 771)">+</button>
+            </div>
+            <button class="add-to-cart-btn" onclick="add('pesto-salad-featured', 771)">Add</button>
+          </div>
+        </div>
+    
+        <div class="dish-card">
+          <img src="https://images.squarespace-cdn.com/content/v1/5c61c1d24d546e66bcd25237/1627664381237-BJRWHG236NXZELRNN398/Juicy-Grilled-Chicken-Platter-web.jpg" alt="Grilled Chicken Platter">
+          <h3>Grilled Chicken </h3>
+          <p><strong>10 mins</strong></p>
+          <div class="rating">★★★★★</div>
+          <div class="price-box">1,161</div>
+          <div class="quantity-controls">
+            <div class="quantity-selector">
+                <button class="quantity-btn minus-btn" onclick="changeQuantity('grilled-chicken-featured', -1, 1161)">-</button>
+                <span class="quantity-display" id="quantity-grilled-chicken-featured">0</span>
+                <button class="quantity-btn plus-btn" onclick="changeQuantity('grilled-chicken-featured', 1, 1161)">+</button>
+            </div>
+            <button class="add-to-cart-btn" onclick="add('grilled-chicken-featured', 1161)">Add</button>
+          </div>
+        </div>
+    
+        <div class="dish-card">
+          <img src="https://i0.wp.com/alilbitofspice.com/wp-content/uploads/2019/05/20190508_142648.jpg?fit=740%2C555&ssl=1" alt="Desi Buddha Bowl">
+          <h3>Desi Bowl</h3>
+          <p><strong>10 mins</strong></p>
+          <div class="rating">★★★★★</div>
+          <div class="price-box">871</div>
+          <div class="quantity-controls">
+            <div class="quantity-selector">
+                <button class="quantity-btn minus-btn" onclick="changeQuantity('desi-bowl-featured', -1, 871)">-</button>
+                <span class="quantity-display" id="quantity-desi-bowl-featured">0</span>
+                <button class="quantity-btn plus-btn" onclick="changeQuantity('desi-bowl-featured', 1, 871)">+</button>
+            </div>
+            <button class="add-to-cart-btn" onclick="add('desi-bowl-featured', 871)">Add</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW TO ORDER -->
+    <section class="how-to-order">
+      <h2>How To Order</h2>
+      <div class="order-steps">
+        <div class="step-card">
+          <div class="icon">🍴</div>
+          <h3>Select Dish</h3>
+          <p>
+            Browse through our menu filled with authentic Indian delights—from sizzling 
+            starters like Paneer Tikka to rich curries like Butter Chicken and aromatic Biryani. 
+            Choose your favorite!
+          </p>
+        </div>
+        <div class="step-card">
+          <div class="icon">📝</div>
+          <h3>Place Your Order</h3>
+          <p>
+            Add your selected dishes to the cart and customize spice levels or sides as needed. 
+            Complete your order with just a few clicks—quick, simple, and secure.
+          </p>
+        </div>
+        <div class="step-card">
+          <div class="icon">💰</div>
+          <h3>Make Payment</h3>
+          <p>
+            Pay easily through UPI, cards, or cash on delivery. Our checkout is smooth and secure 
+            so you can focus on the feast that awaits.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CUSTOMER REVIEWS -->
+    <section class="customer-reviews">
+      <svg class="wave-top" viewBox="0 0 1440 120" preserveAspectRatio="none">
+        <path fill="#f0f0f0" d="M0,0 C480,100 960,0 1440,100 L1440,0 L0,0 Z"></path>
+      </svg>
+      <h2>What Customer Say</h2>
+      <div class="reviews-container">
+        <div class="review-card">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1KU_p2XdkzwuDU_pvyuWS6CjFclQMlxwuZA&s" alt="Kesari Malpua" />
+          <div class="review-content">
+            <div class="profile-pic">
+              <img src="https://media.istockphoto.com/id/1371553731/photo/portrait-of-a-young-businessman-using-a-headset-in-a-modern-office.jpg?s=612x612&w=0&k=20&c=gfn9mVWijMJFNPRdzDNZExnvC6qBOkeeol9oJGpEfSM=" alt="Customer 1" />
+            </div>
+            <div class="stars">★ ★ ★ ★</div>
+            <p>
+              "The Kesari Malpua was divine! Rich in flavor, not too sweet, and 
+              beautifully plated. Takes me right back to my childhood in Rajasthan."
+              <br><strong>— Rajesh M., Jaipur</strong>
+            </p>
+          </div>
+        </div>
+        <div class="review-card">
+          <img src="https://images.slurrp.com/prod/recipe_images/transcribe/main%20course/Mutton-Kofta-curry.webp" alt="Mutton Kofta" />
+          <div class="review-content">
+            <div class="profile-pic">
+              <img src="https://www.shutterstock.com/image-photo/portrait-confident-young-indian-teenager-600w-2157123233.jpg" alt="Customer 2" />
+            </div>
+            <div class="stars">★ ★ ★ ★</div>
+            <p>
+              Spicy Mutton Kofta—juicy, perfectly spiced, and served with mint chutney. 
+              Highly recommend it!"
+              <br><strong>— Arjun P., Delhi</strong>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EMAIL SUBSCRIPTION SECTION -->
+    <section class="subscribe-section">
+      <div class="subscribe-content">
+        <h2>Join Us To Get An Amazing Discount<br>On Your Next Order</h2>
+        <form class="subscribe-form">
+          <input type="email" placeholder="Your Email Here" required>
+          <button type="submit">SUBMIT</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="footer-content">
+        <div class="footer-col brand">
+          <h3 class="highlight">SWIFTBITES</h3>
+          <p>
+            Craving bold Indian flavors on the go?<br>
+            At SWIFTBITES, we bring you quick, delicious, and authentic Indian meals 
+            that satisfy every spice-loving soul.<br>
+            Whether it's a buttery Pav Bhaji, tangy
+          </p>
+          <div class="social-icons">
+            <ul>
+              <li><a href="#" aria-label="Instagram">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                </svg>
+              </a></li>
+              <li><a href="#" aria-label="Facebook">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/>
+                </svg>
+              </a></li>
+              <li><a href="#" aria-label="Twitter">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
+                </svg>
+              </a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>Quick Link</h4>
+          <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Menu</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="#">FAQ'S</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Support</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Contact Us</h4>
+          <p>+45-34-54-789</p>
+          <p>Swiftbites@gmail.com</p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>All Right Reserved By Techh Prime</p>
+        <div class="contact-info">
+          <span>📞 +92 456 678</span>
+          <span>✉️ Swiftbites234@gmail.com</span>
+        </div>
+        <p>© 2025 SWIFTBITES. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <!-- =========================================
+         The Modal Overlay (Login/Register)
+         ========================================= -->
+    <div class="overlay" id="authOverlay">
+      <div class="modal">
+        <button class="close-btn" onclick="closeModal()">✕</button>
+    
+        <!-- Admin Login Form -->
+        <form id="loginForm" class="fade-in" onsubmit="handleAdminLogin(event)">
+          <h2>Admin Login</h2>
+          <div class="form-group">
+              <label>Username</label>
+              <input type="text" id="adminUsername" placeholder="Enter admin username" required>
+              <div class="error-message" id="usernameError"></div>
+          </div>
+          
+          <div class="form-group">
+              <label>Password</label>
+              <input type="password" id="adminPassword" placeholder="Enter admin password" required>
+              <div class="error-message" id="passwordError"></div>
+          </div>
+
+          <button type="submit" class="action-btn">Login</button>
+          <p>Not an admin? <a href="#" onclick="toggleForm('register')"><strong>Register</strong></a></p>
+        </form>
+    
+        <!-- Register Form -->
+        <form id="registerForm" style="display: none;" class="fade-in">
+          <h2>Sign Up</h2>
+          <div class="form-group">
+              <label>Full Name</label>
+              <input type="text" placeholder="Enter your full name" required>
+          </div>
+
+          <div class="form-group">
+              <label>Email</label>
+              <input type="email" placeholder="Enter your email" required>
+          </div>
+      
+          <div class="form-group">
+              <label>Password</label>
+              <input type="password" placeholder="Create a password" required>
+          </div>
+          
+          <div class="form-group">
+              <label>Confirm Password</label>
+              <input type="password" placeholder="Confirm your password" required>
+          </div>
+      
+          <button type="submit" class="action-btn">Create Account</button>
+          <p>Already have an account? <a href="#" onclick="toggleForm('login')"><strong>Login</strong></a></p>
+        </form>
+      </div>
+    </div>   
+  <script>
+    // Enhanced cart functionality with animations and popup messages
+    let cart = {};
+    let popupTimeout;
+
+    function showPopupMessage(message, type = 'success') {
+        console.log(`Showing ${type} message:`, message);
+        const popup = document.createElement('div');
+        popup.className = 'popup-message';
+        popup.style.backgroundColor = type === 'success' ? '#4CAF50' : '#f44336';
+        popup.textContent = message;
+        document.body.appendChild(popup);
+        popup.style.display = 'block';
+
+        // Clear any existing timeout
+        if (popupTimeout) {
+            clearTimeout(popupTimeout);
+        }
+
+        // Remove popup after 3 seconds
+        popupTimeout = setTimeout(() => {
+            popup.remove();
+        }, 3000);
+    }
+
+    function changeQuantity(itemId, change, price) {
+        try {
+            const quantityElement = document.getElementById(`quantity-${itemId}`);
+            if (!quantityElement) return;
+
+            const container = quantityElement.closest('.quantity-controls');
+            if (!container) return;
+
+            const addButton = container.querySelector('.add-to-cart-btn');
+            if (!addButton) return;
+
+            let currentQuantity = parseInt(quantityElement.textContent) || 0;
+            let newQuantity = currentQuantity + change;
+
+            // Ensure quantity never goes below 0
+            if (newQuantity < 0) {
+                newQuantity = 0;
+                showPopupMessage('Quantity cannot be less than 0', 'error');
+                return;
+            }
+
+            // Add animation class
+            quantityElement.classList.add('changed');
+            setTimeout(() => {
+                quantityElement.classList.remove('changed');
+            }, 300);
+
+            // Update quantity display
+            quantityElement.textContent = newQuantity;
+
+            // Update Add button text
+            if (newQuantity > 0) {
+                addButton.textContent = `Add (${newQuantity})`;
+            } else {
+                addButton.textContent = 'Add';
+            }
+
+            // Store in cart if quantity > 0
+            if (newQuantity > 0) {
+                const cardElement = quantityElement.closest('.dish-card');
+                if (cardElement) {
+                    const nameElement = cardElement.querySelector('h3') || cardElement.querySelector('h4');
+                    const itemName = nameElement ? nameElement.textContent.trim() : 'Unknown Item';
+                    cart[itemId] = {
+                        name: itemName,
+                        quantity: newQuantity,
+                        price: price
+                    };
+                }
+            } else {
+                delete cart[itemId];
+            }
+
+            console.log('Cart:', cart);
+        } catch (error) {
+            console.error('Error in changeQuantity:', error);
+            showPopupMessage('An error occurred while updating quantity', 'error');
+        }
+    }
+
+    function add(itemId, price) {
+        try {
+            const quantityElement = document.getElementById(`quantity-${itemId}`);
+            if (!quantityElement) return;
+
+            const quantity = parseInt(quantityElement.textContent) || 0;
+            
+            if (quantity > 0) {
+                const cardElement = quantityElement.closest('.dish-card');
+                if (cardElement) {
+                    const nameElement = cardElement.querySelector('h3') || cardElement.querySelector('h4');
+                    const itemName = nameElement ? nameElement.textContent.trim() : 'Unknown Item';
+                    const totalPrice = (price * quantity).toFixed(2);
+
+                    // Create order item
+                    const orderItem = {
+                        id: itemId,
+                        name: itemName,
+                        quantity: quantity,
+                        price: price,
+                        totalPrice: totalPrice
+                    };
+
+                    // Get existing order items from localStorage
+                    let orderItems = JSON.parse(localStorage.getItem('orderItems')) || [];
+                    
+                    // Add new item to order items
+                    orderItems.push(orderItem);
+                    
+                    // Save updated order items to localStorage
+                    localStorage.setItem('orderItems', JSON.stringify(orderItems));
+
+                    // Show success message
+                    showPopupMessage(`${quantity} ${itemName}${quantity > 1 ? 's' : ''} added to cart (₹${totalPrice})`);
+
+                    // Reset quantity and button text
+                    quantityElement.textContent = '0';
+                    const addButton = cardElement.querySelector('.add-to-cart-btn');
+                    if (addButton) {
+                        addButton.textContent = 'Add';
+                    }
+
+                    // Remove item from cart after adding
+                    delete cart[itemId];
+                }
+            } else {
+                showPopupMessage('Please select a quantity first', 'error');
+            }
+        } catch (error) {
+            console.error('Error in addToCart:', error);
+            showPopupMessage('An error occurred while adding to cart', 'error');
+        }
+    }
+
+    // Add function to clear cart if needed
+    function clearCart() {
+        try {
+            localStorage.removeItem('cart');
+            showPopupMessage('Cart cleared successfully');
+        } catch (error) {
+            console.error('Error clearing cart:', error);
+            showPopupMessage('Error clearing cart', 'error');
+        }
+    }
+
+    // Add function to get cart items
+    function getCartItems() {
+        try {
+            const cartData = localStorage.getItem('cart');
+            if (cartData) {
+                return JSON.parse(cartData);
+            }
+            return [];
+        } catch (error) {
+            console.error('Error getting cart items:', error);
+            return [];
+        }
+    }
+
+    // Initialize all quantity controls when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+        try {
+            document.querySelectorAll('.quantity-controls').forEach(container => {
+                const quantityElement = container.querySelector('.quantity-display');
+                const addButton = container.querySelector('.add-to-cart-btn');
+                
+                if (quantityElement && addButton) {
+                    // Set initial values
+                    quantityElement.textContent = '0';
+                    addButton.textContent = 'Add';
+                }
+            });
+        } catch (error) {
+            console.error('Error in initialization:', error);
+        }
+    });
+
+    // Enhanced modal functions
+    function toggleForm(form) {
+      const loginForm = document.getElementById("loginForm");
+      const registerForm = document.getElementById("registerForm");
+
+      loginForm.classList.remove('fade-in');
+      registerForm.classList.remove('fade-in');
+
+      if (form === "login") {
+        loginForm.style.display = "block";
+        registerForm.style.display = "none";
+        void loginForm.offsetWidth;
+        loginForm.classList.add('fade-in');
+      } else {
+        loginForm.style.display = "none";
+        registerForm.style.display = "block";
+        void registerForm.offsetWidth;
+        registerForm.classList.add('fade-in');
+      }
+    }
+
+    // Show the overlay + open the Login form
+    function openLoginModal() {
+      document.getElementById("authOverlay").style.display = "flex";
+      toggleForm("login");
+      
+      // Auto-fill admin credentials
+      document.getElementById("adminUsername").value = "admin123";
+      document.getElementById("adminPassword").value = "123";
+    }
+
+    // Show the overlay + open the Register form
+    function openRegisterModal() {
+      document.getElementById("authOverlay").style.display = "flex";
+      toggleForm("register");
+    }
+
+    // Hide the overlay
+    function closeModal() {
+      document.getElementById("authOverlay").style.display = "none";
+      // Clear the form fields when closing
+      document.getElementById("adminUsername").value = "";
+      document.getElementById("adminPassword").value = "";
+    }
+
+    // OPTIONAL: Close overlay if user clicks outside the modal
+    document.getElementById('authOverlay').addEventListener('click', function(e) {
+      if (e.target === this) {
+        closeModal();
+      }
+    });
+
+    // Add scroll reveal animation
+    function revealOnScroll() {
+      const elements = document.querySelectorAll('.dish-card, .review-card, .step-card');
+      
+      elements.forEach(element => {
+        const elementTop = element.getBoundingClientRect().top;
+        const elementVisible = 150;
+        
+        if (elementTop < window.innerHeight - elementVisible) {
+          element.classList.add('revealed');
+        }
+      });
+    }
+
+    // Initialize scroll reveal
+    window.addEventListener('scroll', revealOnScroll);
+    window.addEventListener('load', revealOnScroll);
+
+    // Add hover effect for social icons
+    document.querySelectorAll('.social-icons a').forEach(icon => {
+      icon.addEventListener('mouseenter', () => {
+        icon.style.transform = 'scale(1.2)';
+      });
+      icon.addEventListener('mouseleave', () => {
+        icon.style.transform = 'scale(1)';
+      });
+    });
+
+    // Add smooth scroll for navigation links
+    document.querySelectorAll('nav a').forEach(link => {
+      link.addEventListener('click', (e) => {
+        const targetId = link.getAttribute('href');
+        if (targetId.startsWith('#')) {
+          e.preventDefault();
+          const targetElement = document.querySelector(targetId);
+          if (targetElement) {
+            targetElement.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }
+        }
+      });
+    });
+
+    function showPopularDishes() {
+      try {
+        // Define popular dishes (you can modify this list)
+        const popularDishes = [
+          { id: 'pizza', quantity: 2 },
+          { id: 'burger', quantity: 1 },
+          { id: 'pasta', quantity: 1 },
+          { id: 'ice-cream', quantity: 2 }
+        ];
+
+        // Clear existing order items
+        localStorage.removeItem('orderItems');
+        let orderItems = [];
+
+        // Add popular dishes to cart
+        popularDishes.forEach(dish => {
+          const cardElement = document.querySelector(`[data-category*="${dish.id}"]`);
+          if (cardElement) {
+            const nameElement = cardElement.querySelector('h2');
+            const priceElement = cardElement.querySelector('.price-box');
+            
+            if (nameElement && priceElement) {
+              const itemName = nameElement.textContent.trim();
+              const price = parseFloat(priceElement.textContent);
+              const totalPrice = (price * dish.quantity).toFixed(2);
+
+              const orderItem = {
+                id: dish.id,
+                name: itemName,
+                quantity: dish.quantity,
+                price: price,
+                totalPrice: totalPrice
+              };
+
+              orderItems.push(orderItem);
+            }
+          }
+        });
+
+        // Save to localStorage
+        localStorage.setItem('orderItems', JSON.stringify(orderItems));
+
+        // Show success message
+        showPopupMessage('Popular dishes added to cart!');
+
+        // Redirect to order summary page
+        setTimeout(() => {
+          window.location.href = 'OrderSummarypage.html';
+        }, 1000);
+
+      } catch (error) {
+        console.error('Error adding popular dishes:', error);
+        showPopupMessage('Failed to add popular dishes', 'error');
+      }
+    }
+
+    // Handle form submissions
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      // Add your login logic here
+      showPopupMessage('Login successful!', 'success');
+      closeModal();
+    });
+
+    document.getElementById('registerForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      const formData = {
+          username: this.querySelector('input[type="text"]').value,
+          password: this.querySelector('input[type="password"]').value,
+          email: this.querySelector('input[type="email"]').value
+      };
+
+      console.log('Attempting registration with data:', { ...formData, password: '***' });
+
+      try {
+          // First check if server is running
+          console.log('Checking server health...');
+          const healthCheck = await fetchWithRetry('http://localhost:8080/api/health', {
+              method: 'GET',
+              headers: {
+                  'Accept': 'application/json'
+              },
+              credentials: 'include'
+          });
+
+          if (!healthCheck.ok) {
+              throw new Error('Server is not responding. Please make sure the server is running.');
+          }
+
+          console.log('Server health check passed, attempting registration...');
+          const response = await fetchWithRetry('http://localhost:8080/api/admin/register', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json',
+                  'Accept': 'application/json'
+              },
+              credentials: 'include',
+              body: JSON.stringify(formData)
+          });
+
+          if (!response.ok) {
+              const errorData = await response.json();
+              throw new Error(errorData.message || 'Registration failed');
+          }
+
+          const data = await response.json();
+          console.log('Registration response:', data);
+
+          if (data.success) {
+              showPopupMessage('Account created successfully!', 'success');
+              toggleForm('login');
+          } else {
+              showPopupMessage(data.message || 'Error creating account', 'error');
+          }
+      } catch (error) {
+          console.error('Registration error:', error);
+          showPopupMessage(error.message || 'Error connecting to server. Please try again.', 'error');
+      }
+    });
+
+    // Admin authentication functions
+    async function handleAdminLogin(event) {
+        event.preventDefault();
+        
+        const username = document.getElementById('adminUsername').value;
+        const password = document.getElementById('adminPassword').value;
+        const usernameError = document.getElementById('usernameError');
+        
+        // Reset error messages
+        usernameError.style.display = 'none';
+        
+        // Validate inputs
+        if (!username || !password) {
+            usernameError.textContent = 'Please enter both username and password';
+            usernameError.style.display = 'block';
+            return;
+        }
+
+        try {
+            // Show loading state
+            const loginButton = event.target.querySelector('button[type="submit"]');
+            const originalText = loginButton.textContent;
+            loginButton.textContent = 'Logging in...';
+            loginButton.disabled = true;
+
+            // Simulate API call (replace with actual API call)
+            if (username === 'admin123' && password === '123') {
+                // Store user data
+                const userData = {
+                    username: username,
+                    role: 'Administrator',
+                    loginTime: new Date().toISOString()
+                };
+                
+                localStorage.setItem('adminLoggedIn', 'true');
+                localStorage.setItem('adminUser', JSON.stringify(userData));
+                
+                // Update UI
+                updateAuthUI(true);
+                
+                // Show success message
+                showPopupMessage('Successfully logged in!', 'success');
+                
+                // Close modal
+                setTimeout(() => {
+                    closeModal();
+                }, 500);
+            } else {
+                throw new Error('Invalid credentials');
+            }
+        } catch (error) {
+            usernameError.textContent = error.message;
+            usernameError.style.display = 'block';
+            showPopupMessage(error.message, 'error');
+        } finally {
+            // Reset button state
+            const loginButton = event.target.querySelector('button[type="submit"]');
+            loginButton.textContent = 'Login';
+            loginButton.disabled = false;
+        }
+    }
+
+    // Check login status on page load
+    document.addEventListener('DOMContentLoaded', () => {
+        const isLoggedIn = localStorage.getItem('adminLoggedIn') === 'true';
+        updateAuthUI(isLoggedIn);
+    });
+
+    // Profile Icon Functionality
+    const profileIcon = document.getElementById('profileIcon');
+    const profileDropdown = document.getElementById('profileDropdown');
+    const authButtons = document.querySelector('.auth');
+
+    // Show profile icon and hide auth buttons when admin is logged in
+    function updateAuthUI(isLoggedIn) {
+        const profileIcon = document.getElementById('profileIcon');
+        const authButtons = document.querySelector('.auth');
+        
+        if (isLoggedIn) {
+            // Get user data
+            const userData = JSON.parse(localStorage.getItem('adminUser') || '{}');
+            
+            // Show profile icon, hide auth buttons
+            if (profileIcon) {
+                profileIcon.classList.add('show');
+                
+                // Update username in dropdown
+                const dropdownUsername = document.getElementById('dropdownUsername');
+                if (dropdownUsername) {
+                    dropdownUsername.textContent = userData.username || 'Admin';
+                }
+            }
+            
+            // Hide auth buttons with fade
+            if (authButtons) {
+                authButtons.style.opacity = '0';
+                setTimeout(() => {
+                    authButtons.style.display = 'none';
+                }, 300);
+            }
+        } else {
+            // Hide profile icon
+            if (profileIcon) {
+                profileIcon.classList.remove('show');
+            }
+            
+            // Show auth buttons
+            if (authButtons) {
+                authButtons.style.display = 'flex';
+                setTimeout(() => {
+                    authButtons.style.opacity = '1';
+                }, 10);
+            }
+        }
+    }
+
+    // Toggle dropdown menu
+    profileIcon.addEventListener('click', (e) => {
+        e.stopPropagation();
+        profileDropdown.classList.toggle('show');
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(e) {
+        if (profileDropdown && profileDropdown.classList.contains('show') && !profileIcon.contains(e.target)) {
+            profileDropdown.classList.remove('show');
+        }
+    });
+
+    // Logout function
+    function logout() {
+        // Show confirmation popup
+        if (confirm('Are you sure you want to logout?')) {
+            // Clear user data
+            localStorage.removeItem('adminLoggedIn');
+            localStorage.removeItem('adminUser');
+            
+            // Update UI
+            updateAuthUI(false);
+            
+            // Show success message
+            showPopupMessage('Successfully logged out!', 'success');
+            
+            // Close dropdown
+            const profileDropdown = document.getElementById('profileDropdown');
+            if (profileDropdown) {
+                profileDropdown.classList.remove('show');
+            }
+        }
+    }
+
+    // Update the server status check function
+    async function checkServerStatus() {
+        if (currentServerState === ServerState.CONNECTING) {
+            return false;
+        }
+
+        updateServerStatus(ServerState.CONNECTING);
+        
+        try {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 5000);
+
+            const response = await fetch('http://localhost:8080/api/health', {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json',
+                    'Cache-Control': 'no-cache'
+                },
+                signal: controller.signal
+            });
+
+            clearTimeout(timeoutId);
+
+            if (response.ok) {
+                connectionAttempts = 0;
+                updateServerStatus(ServerState.CONNECTED, 'Server connection established');
+                return true;
+            } else {
+                throw new Error('Server health check failed');
+            }
+        } catch (error) {
+            console.error('Server check failed:', error);
+            handleConnectionError(error);
+            return false;
+        }
+    }
+
+    function handleConnectionError(error) {
+        connectionAttempts++;
+        
+        const errorMessage = error.name === 'AbortError' 
+            ? 'Connection timeout' 
+            : 'Failed to connect to server';
+        
+        updateServerStatus(ServerState.DISCONNECTED, errorMessage);
+
+        if (connectionAttempts < MAX_RETRY_ATTEMPTS) {
+            const delay = Math.min(BASE_RETRY_DELAY * Math.pow(2, connectionAttempts - 1), 30000);
+            console.log(`Retrying connection in ${delay/1000} seconds...`);
+            
+            if (retryTimeout) {
+                clearTimeout(retryTimeout);
+            }
+            
+            retryTimeout = setTimeout(() => {
+                retryConnection();
+            }, delay);
+        } else {
+            console.error('Max retry attempts reached');
+            showPopupMessage('Unable to connect to server after multiple attempts', 'error');
+        }
+    }
+
+    async function retryConnection() {
+        if (currentServerState === ServerState.CONNECTING) {
+            return;
+        }
+
+        if (retryTimeout) {
+            clearTimeout(retryTimeout);
+            retryTimeout = null;
+        }
+
+        const success = await checkServerStatus();
+        
+        if (success) {
+            // Refresh the page data or reinitialize components if needed
+            initializeApp();
+        }
+    }
+
+    function initializeApp() {
+        // Initialize your app components here
+        console.log('Initializing app components...');
+        
+        // Example: Update UI elements that depend on server connection
+        const authButtons = document.querySelector('.auth');
+        if (authButtons) {
+            authButtons.style.opacity = '1';
+            authButtons.style.pointerEvents = 'auto';
+        }
+    }
+
+    // Start server monitoring when page loads
+    document.addEventListener('DOMContentLoaded', () => {
+        // Initial check
+        checkServerStatus();
+        
+        // Regular health checks
+        const healthCheckInterval = setInterval(() => {
+            if (currentServerState !== ServerState.CONNECTING) {
+                checkServerStatus();
+            }
+        }, 30000); // Check every 30 seconds
+
+        // Cleanup on page unload
+        window.addEventListener('unload', () => {
+            clearInterval(healthCheckInterval);
+            if (retryTimeout) {
+                clearTimeout(retryTimeout);
+            }
+        });
+    });
+
+    // Add error logging to window.onerror
+    window.onerror = function(message, source, lineno, colno, error) {
+        console.error('Global error:', {
+            message,
+            source,
+            lineno,
+            colno,
+            error
+        });
+        return false;
+    };
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+

@@ -1,0 +1,1221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Menu Page</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: #f2f2f2;
+      padding-bottom: 50px;
+    }
+
+    header {
+      background: linear-gradient(135deg, #ff8c00, #ff6b00);
+      padding: 15px 0;
+      box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-container img {
+      height: 40px;
+      width: auto;
+      transition: transform 0.3s ease;
+    }
+
+    .logo-container:hover img {
+      transform: scale(1.1);
+    }
+
+    .logo-container span {
+      color: #fff;
+      font-size: 24px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 35px;
+    }
+
+    .nav-links a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 16px;
+      padding: 8px 15px;
+      border-radius: 25px;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .nav-links a::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.1);
+      clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+      transform: scale(0);
+      transition: transform 0.3s ease;
+    }
+
+    .nav-links a.home.active::before {
+      transform: scale(1.2);
+    }
+
+    .nav-links a:hover::before {
+      transform: scale(1.2);
+    }
+
+    .nav-links a.active {
+      font-weight: 600;
+    }
+
+    /* Add fade animation for active state */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .nav-links a {
+      animation: fadeIn 0.5s ease-in-out;
+    }
+
+    /* Ensure proper display on mobile */
+    @media screen and (max-width: 768px) {
+      .nav-links a.active {
+        background: rgba(255, 255, 255, 0.2);
+      }
+    }
+
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 6px;
+      cursor: pointer;
+      padding: 5px;
+    }
+
+    .menu-toggle span {
+      width: 30px;
+      height: 3px;
+      background: #fff;
+      border-radius: 3px;
+      transition: all 0.3s ease;
+    }
+
+    .buttons {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      white-space: nowrap;
+    }
+
+    .buttons button {
+      padding: 8px 15px;
+      border: none;
+      border-radius: 5px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      min-width: fit-content;
+    }
+
+    .sign-in {
+      background: #fff;
+      color: #f7931e;
+      width: auto;
+    }
+
+    .get-app {
+      background: #333;
+      color: white;
+      width: auto;
+    }
+
+    .buttons button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+
+    .menu {
+      padding: 30px;
+      text-align: center;
+    }
+
+    .filters {
+      margin-top: 20px;
+    }
+
+    .filters button {
+      margin: 5px;
+      padding: 8px 20px;
+      border: none;
+      border-radius: 25px;
+      background: #f0f0f0;
+      color: #333;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .filters button::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      background: rgba(255, 153, 0, 0.2);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: width 0.6s ease, height 0.6s ease;
+    }
+
+    .filters button:hover {
+      background-color: #ff9900;
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .filters button:hover::before {
+      width: 300px;
+      height: 300px;
+    }
+
+    .filters button.active {
+      background-color: #ff9900;
+      color: white;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 25px;
+      margin-top: 30px;
+      padding: 0 20px;
+      max-width: 1400px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .card {
+      background: #fff;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+
+    .card:hover .price-box {
+      transform: scale(1.05);
+      background: #f7931e;
+      color: white;
+    }
+
+    .quantity-controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 15px;
+      padding: 0 10px;
+    }
+
+    .quantity-selector {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 120px;
+      height: 40px;
+    }
+
+    .quantity-btn {
+      width: 30px;
+      height: 30px;
+      min-width: 30px;
+      border: none;
+      border-radius: 6px;
+      background: #ff9900;
+      color: white;
+      font-size: 20px;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+      padding: 0;
+      margin: 0;
+      line-height: 1;
+      user-select: none;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .quantity-btn:hover {
+      background: #e67e00;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    }
+
+    .quantity-btn:active {
+      transform: translateY(1px);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .quantity-display {
+      flex: 0 0 auto;
+      text-align: center;
+      font-weight: 600;
+      font-size: 18px;
+      color: #333;
+      min-width: 24px;
+      user-select: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .add-to-cart {
+      width: 120px;
+      height: 40px;
+      padding: 0;
+      background: #ff9900;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 16px;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .add-to-cart:hover {
+      background: #e67e00;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    }
+
+    .add-to-cart:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .card img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-bottom: 15px;
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover img {
+      transform: scale(1.05);
+    }
+
+    .card h2 {
+      margin: 10px 0 5px;
+      font-size: 1.2rem;
+      color: #333;
+      font-weight: 600;
+    }
+
+    .card p {
+      margin: 5px 0;
+      color: #444;
+      font-size: 1.1rem;
+    }
+
+    .card button {
+      margin-top: 15px;
+      background: #ff9900;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card button::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: width 0.6s ease, height 0.6s ease;
+    }
+
+    .card button:hover {
+      background: #e68a00;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .card button:hover::before {
+      width: 300px;
+      height: 300px;
+    }
+
+    .card button:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    /* Media Queries for Responsive Design */
+    @media screen and (max-width: 1400px) {
+      .menu-grid {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        gap: 20px;
+        padding: 0 15px;
+      }
+    }
+
+    @media screen and (max-width: 1024px) {
+      .menu-grid {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 15px;
+      }
+      
+      .card {
+        padding: 15px;
+      }
+      
+      .card img {
+        height: 130px;
+      }
+      
+      .card h2 {
+        font-size: 1.1rem;
+      }
+      
+      .card p {
+        font-size: 1rem;
+      }
+    }
+
+    @media screen and (max-width: 768px) {
+      .menu-toggle {
+        display: flex;
+      }
+
+      .nav-links {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: linear-gradient(135deg, #ff8c00, #ff6b00);
+        padding: 20px;
+        flex-direction: column;
+        gap: 20px;
+        transform: translateY(-150%);
+        transition: transform 0.3s ease;
+        opacity: 0;
+      }
+
+      .nav-links.active {
+        transform: translateY(0);
+        opacity: 1;
+      }
+
+      .nav-links a {
+        width: 100%;
+        text-align: center;
+      }
+
+      .card {
+        padding: 12px;
+      }
+      
+      .card img {
+        height: 110px;
+      }
+      
+      .card h2 {
+        font-size: 1rem;
+      }
+      
+      .card p {
+        font-size: 0.9rem;
+      }
+      
+      .card button {
+        padding: 6px 12px;
+        font-size: 0.9rem;
+      }
+    }
+
+    @media screen and (max-width: 480px) {
+      .menu-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        padding: 0 8px;
+      }
+      
+      .card {
+        padding: 10px;
+      }
+      
+      .card img {
+        height: 100px;
+      }
+      
+      .card h2 {
+        font-size: 0.9rem;
+      }
+      
+      .card p {
+        font-size: 0.8rem;
+      }
+      
+      .card button {
+        padding: 5px 10px;
+        font-size: 0.8rem;
+      }
+
+      header {
+        padding: 8px 12px;
+      }
+
+      .logo-container img {
+        height: 28px;
+      }
+
+      .logo-container span {
+        font-size: 18px;
+      }
+
+      .navbar nav {
+        gap: 12px;
+      }
+
+      .navbar nav a {
+        font-size: 14px;
+        padding: 4px 8px;
+      }
+    }
+
+    /* Add styles for the cart popup message */
+    .cart-message {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: #ff9900;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 25px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        animation: slideIn 0.3s ease-out;
+    }
+
+    @keyframes slideIn {
+        from {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+
+    /* Update price box styles */
+    .price-box {
+        background: #fff;
+        border: 2px solid #f7931e;
+        border-radius: 8px;
+        padding: 8px 15px;
+        margin: 10px auto;
+        display: inline-block;
+        font-weight: 600;
+        color: #f7931e;
+        font-size: 1.1rem;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        min-width: 80px;
+        text-align: center;
+        position: relative;
+    }
+
+    .price-box::before {
+        content: '₹';
+        margin-right: 2px;
+        font-size: 0.9rem;
+        position: relative;
+        top: -1px;
+    }
+
+    /* Update popup message styles */
+    .popup-message {
+        position: fixed;
+        top: 20px;  /* Changed from bottom to top */
+        right: 20px;
+        background: #4CAF50;
+        color: white;
+        padding: 15px 25px;
+        border-radius: 4px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        z-index: 1000;
+        animation: slideInFromTop 0.3s ease-out;
+        font-size: 16px;
+        font-weight: 500;
+    }
+
+    @keyframes slideInFromTop {
+        from {
+            transform: translateY(-100%);
+            opacity: 0;
+        }
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+
+    @keyframes fadeOut {
+        from {
+            opacity: 1;
+        }
+        to {
+            opacity: 0;
+        }
+    }
+
+    /* Add quantity display animation */
+    .quantity-display.changed {
+        animation: pulse 0.3s ease-out;
+    }
+
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.2); }
+        100% { transform: scale(1); }
+    }
+
+    /* Add rating styles */
+    .rating {
+        color: #ffc107;
+        margin: 5px 0;
+        font-size: 1.1rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="navbar">
+      <div class="logo-container" onclick="window.location.href='test1.html'" style="cursor: pointer;">
+        <img src="https://cdn-icons-png.flaticon.com/512/4329/4329542.png" alt="SwiftBites Icon">
+        <span>SwiftBites</span>
+      </div>
+      <div class="menu-toggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <nav class="nav-links">
+        <a href="test1.html" class="home active">Home</a>
+        <a href="Menupage.html">Menu</a>
+        <a href="OrderSummarypage.html">Order Summary</a>
+        <a href="checkoutpage.html">Checkout</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="menu">
+    <h1>Our Menu</h1>
+    <div class="filters">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="beverages">Beverages</button>
+      <button class="filter-btn" data-filter="breakfast">Breakfast</button>
+      <button class="filter-btn" data-filter="dinner">Dinner</button>
+      <button class="filter-btn" data-filter="desserts">Desserts</button>
+    </div>
+
+    <div class="menu-grid">
+      <!-- Beverages -->
+      <div class="card" data-category="beverages">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkja2AtC6uHyBtwzP9kAitPzCmZl9D2J-CPw&s" alt="Coffee">
+        <h2>Espresso</h2>
+        <p>10 mins</p>
+        <div class="rating">★★★★★</div>
+        <div class="price-box">247</div>
+        <div class="quantity-controls">
+          <div class="quantity-selector">
+            <button class="quantity-btn minus" onclick="changeQuantity('espresso', -1, 247)">-</button>
+            <span class="quantity-display" id="quantity-espresso">0</span>
+            <button class="quantity-btn plus" onclick="changeQuantity('espresso', 1, 247)">+</button>
+          </div>
+          <button class="add-to-cart" onclick="addToCart('espresso', 247)">Add</button>
+        </div>
+      </div>
+      <div class="card" data-category="beverages">
+        <img src="https://okcredit-blog-images-prod.storage.googleapis.com/2022/01/greentea1.jpg" alt="Tea">
+        <h2>Green Tea</h2>
+        <p>10 mins</p>
+        <div class="rating">★★★★☆</div>
+        <div class="price-box">206</div>
+        <div class="quantity-controls">
+          <div class="quantity-selector">
+            <button class="quantity-btn minus" onclick="changeQuantity('green-tea', -1, 206)">-</button>
+            <span class="quantity-display" id="quantity-green-tea">0</span>
+            <button class="quantity-btn plus" onclick="changeQuantity('green-tea', 1, 206)">+</button>
+          </div>
+          <button class="add-to-cart" onclick="addToCart('green-tea', 206)">Add</button>
+        </div>
+      </div>
+      <div class="card" data-category="beverages">
+        <img src="https://www.eatingwell.com/thmb/TBp6lbiwoYPhRP4N__4sROiUDhA=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/mixed-berry-breakfast-smoothie-7959466-1x1-e0ad2304222e49508cda7b73b21de921.jpg" alt="Smoothie">
+        <h2>Smoothie</h2>
+        <p>10 mins</p>
+        <div class="rating">★★★★★</div>
+        <div class="price-box">371</div>
+        <div class="quantity-controls">
+          <div class="quantity-selector">
+            <button class="quantity-btn minus" onclick="changeQuantity('smoothie', -1, 371)">-</button>
+            <span class="quantity-display" id="quantity-smoothie">0</span>
+            <button class="quantity-btn plus" onclick="changeQuantity('smoothie', 1, 371)">+</button>
+          </div>
+          <button class="add-to-cart" onclick="addToCart('smoothie', 371)">Add</button>
+        </div>
+      </div>
+
+      <!-- Breakfast -->
+      <div class="card" data-category="breakfast">
+        <img src="https://ichef.bbci.co.uk/food/ic/food_16x9_832/recipes/fluffyamericanpancak_74828_16x9.jpg" alt="Pancakes">
+        <h2>Pancakes</h2>
+        <p>10 mins</p>
+        <div class="rating">★★★★☆</div>
+        <div class="price-box">412</div>
+        <div class="quantity-controls">
+          <div class="quantity-selector">
+            <button class="quantity-btn minus" onclick="changeQuantity('pancakes', -1, 412)">-</button>
+            <span class="quantity-display" id="quantity-pancakes">0</span>
+            <button class="quantity-btn plus" onclick="changeQuantity('pancakes', 1, 412)">+</button>
+          </div>
+          <button class="add-to-cart" onclick="addToCart('pancakes', 412)">Add</button>
+        </div>
+      </div>
+      <div class="card" data-category="breakfast">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTH7iqq1h9BQabL7Z5T6Z8bQvAIFxWA_PMJcw&s" alt="Omelette">
+        <h2>Omelette</h2>
+        <p>10 mins</p>
+        <div class="rating">★★★★★</div>
+        <div class="price-box">330</div>
+        <div class="quantity-controls">
+          <div class="quantity-selector">
+            <button class="quantity-btn minus" onclick="changeQuantity('omelette', -1, 330)">-</button>
+            <span class="quantity-display" id="quantity-omelette">0</span>
+            <button class="quantity-btn plus" onclick="changeQuantity('omelette', 1, 330)">+</button>
+          </div>
+          <button class="add-to-cart" onclick="addToCart('omelette', 330)">Add</button>
+        </div>
+      </div>
+      <div class="card" data-category="breakfast">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4r9f0drfanCFBd1xij9DHfOx60VDORBUs5w&s" alt="Waffles">
+        <h2>Waffles</h2>
+        <p>10 mins</p>
+        <div class="rating">★★★★☆</div>
+        <div class="price-box">454</div>
+        <div class="quantity-controls">
+          <div class="quantity-selector">
+            <button class="quantity-btn minus" onclick="changeQuantity('waffles', -1, 454)">-</button>
+            <span class="quantity-display" id="quantity-waffles">0</span>
+            <button class="quantity-btn plus" onclick="changeQuantity('waffles', 1, 454)">+</button>
+          </div>
+          <button class="add-to-cart" onclick="addToCart('waffles', 454)">Add</button>
+        </div>
+      </div>
+      <!-- Dinner -->
+      <div class="card" data-category="dinner">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0undFfMNyl3kMlsYZGZSNXU99EkP8WLHkAQ&s" alt="Pizza">
+        <h2>Pizza</h2>
+        <p>10 mins</p>
+        <div class="rating">★★★★★</div>
+        <div class="price-box">660</div>
+        <div class="quantity-controls">
+          <div class="quantity-selector">
+            <button class="quantity-btn minus" onclick="changeQuantity('pizza', -1, 660)">-</button>
+            <span class="quantity-display" id="quantity-pizza">0</span>
+            <button class="quantity-btn plus" onclick="changeQuantity('pizza', 1, 660)">+</button>
+          </div>
+          <button class="add-to-cart" onclick="addToCart('pizza', 660)">Add</button>
+        </div>
+      </div>
+      <div class="card" data-category="dinner">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTa9Qq1rV_svdydH5u3O8r5ZmT8udMBnSuKeA&s" alt="Burger">
+        <h2>Beef Burger</h2>
+        <p>10 mins</p>
+        <div class="rating">★★★★☆</div>
+        <div class="price-box">577</div>
+        <div class="quantity-controls">
+          <div class="quantity-selector">
+            <button class="quantity-btn minus" onclick="changeQuantity('beef-burger', -1, 577)">-</button>
+            <span class="quantity-display" id="quantity-beef-burger">0</span>
+            <button class="quantity-btn plus" onclick="changeQuantity('beef-burger', 1, 577)">+</button>
+          </div>
+          <button class="add-to-cart" onclick="addToCart('beef-burger', 577)">Add</button>
+        </div>
+      </div>
+      <div class="card" data-category="dinner">
+        <img src="https://www.sharmispassions.com/wp-content/uploads/2015/12/alfredopasta5-500x500.jpg" alt="Pasta">
+        <h2>Alfredo Pasta</h2>
+        <p>10 mins</p>
+        <div class="rating">★★★★★</div>
+        <div class="price-box">742</div>
+        <div class="quantity-controls">
+          <div class="quantity-selector">
+            <button class="quantity-btn minus" onclick="changeQuantity('alfredo-pasta', -1, 742)">-</button>
+            <span class="quantity-display" id="quantity-alfredo-pasta">0</span>
+            <button class="quantity-btn plus" onclick="changeQuantity('alfredo-pasta', 1, 742)">+</button>
+          </div>
+          <button class="add-to-cart" onclick="addToCart('alfredo-pasta', 742)">Add</button>
+        </div>
+      </div>
+
+      <!-- Desserts -->
+      <div class="card" data-category="desserts">
+        <img src="https://static.toiimg.com/thumb/63971154.cms?width=573&height=430" alt="Ice Cream">
+        <h2>Vanilla Ice</h2>
+        <p>10 mins</p>
+        <div class="rating">★★★★☆</div>
+        <div class="price-box">289</div>
+        <div class="quantity-controls">
+          <div class="quantity-selector">
+            <button class="quantity-btn minus" onclick="changeQuantity('vanilla-ice', -1, 289)">-</button>
+            <span class="quantity-display" id="quantity-vanilla-ice">0</span>
+            <button class="quantity-btn plus" onclick="changeQuantity('vanilla-ice', 1, 289)">+</button>
+          </div>
+          <button class="add-to-cart" onclick="addToCart('vanilla-ice', 289)">Add</button>
+        </div>
+      </div>
+      <div class="card" data-category="desserts">
+        <img src="https://i0.wp.com/cookingwithbry.com/wp-content/uploads/chocolate-brownies-recipe.png?fit=1080%2C1080&ssl=1" alt="Brownie">
+        <h2>Brownie</h2>
+        <p>10 mins</p>
+        <div class="rating">★★★★★</div>
+        <div class="price-box">330</div>
+        <div class="quantity-controls">
+          <div class="quantity-selector">
+            <button class="quantity-btn minus" onclick="changeQuantity('brownie', -1, 330)">-</button>
+            <span class="quantity-display" id="quantity-brownie">0</span>
+            <button class="quantity-btn plus" onclick="changeQuantity('brownie', 1, 330)">+</button>
+          </div>
+          <button class="add-to-cart" onclick="addToCart('brownie', 330)">Add</button>
+        </div>
+      </div>
+      <div class="card" data-category="desserts">
+        <img src="https://florasensations.com/wp-content/uploads/2023/05/Delicious-Creamy-Strawberry-Cake.jpg" alt="Cake">
+        <h2>StrawberryCake</h2>
+        <p>10 mins</p>
+        <div class="rating">★★★★☆</div>
+        <div class="price-box">371</div>
+        <div class="quantity-controls">
+          <div class="quantity-selector">
+            <button class="quantity-btn minus" onclick="changeQuantity('strawberry-cake', -1, 371)">-</button>
+            <span class="quantity-display" id="quantity-strawberry-cake">0</span>
+            <button class="quantity-btn plus" onclick="changeQuantity('strawberry-cake', 1, 371)">+</button>
+          </div>
+          <button class="add-to-cart" onclick="addToCart('strawberry-cake', 371)">Add</button>
+        </div>
+      </div>
+      <!-- New Beverages -->
+      <div class="card" data-category="beverages">
+        <img src="https://palatesdesire.com/wp-content/uploads/2022/02/iced-coffee-recipe@palates-desire-4.jpg" alt="Iced Coffee">
+        <h2>Iced Coffee</h2>
+        <p>10 mins</p>
+        <div class="rating">★★★★★</div>
+        <div class="price-box">289</div>
+        <div class="quantity-controls">
+          <div class="quantity-selector">
+            <button class="quantity-btn minus" onclick="changeQuantity('iced-coffee', -1, 289)">-</button>
+            <span class="quantity-display" id="quantity-iced-coffee">0</span>
+            <button class="quantity-btn plus" onclick="changeQuantity('iced-coffee', 1, 289)">+</button>
+          </div>
+          <button class="add-to-cart" onclick="addToCart('iced-coffee', 289)">Add</button>
+        </div>
+      </div>
+      <div class="card" data-category="beverages">
+        <img src="https://www.simplyrecipes.com/thmb/4LFrc9hSMoKErr2WI7tThcnvWwA=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Simply-Recipes-Perfect-Lemonade-LEAD-08-B-441ceb568f854bb485dbed79e082bb4a.jpg" alt="Lemonade">
+        <h2>Lemonade</h2>
+        <p>10 mins</p>
+        <div class="rating">★★★★☆</div>
+        <div class="price-box">165</div>
+        <div class="quantity-controls">
+          <div class="quantity-selector">
+            <button class="quantity-btn minus" onclick="changeQuantity('lemonade', -1, 165)">-</button>
+            <span class="quantity-display" id="quantity-lemonade">0</span>
+            <button class="quantity-btn plus" onclick="changeQuantity('lemonade', 1, 165)">+</button>
+          </div>
+          <button class="add-to-cart" onclick="addToCart('lemonade', 165)">Add</button>
+        </div>
+      </div>
+
+      <!-- New Breakfast -->
+      <div class="card" data-category="breakfast">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRc9AIvAc6dkD5GTVhVASi91F4Jc4n7AbOFhw&s" alt="Avocado Toast">
+        <h2>Toast</h2>
+        <p>10 mins</p>
+        <div class="rating">★★★★★</div>
+        <div class="price-box">392</div>
+        <div class="quantity-controls">
+          <div class="quantity-selector">
+            <button class="quantity-btn minus" onclick="changeQuantity('toast', -1, 392)">-</button>
+            <span class="quantity-display" id="quantity-toast">0</span>
+            <button class="quantity-btn plus" onclick="changeQuantity('toast', 1, 392)">+</button>
+          </div>
+          <button class="add-to-cart" onclick="addToCart('toast', 392)">Add</button>
+        </div>
+      </div>
+      <div class="card" data-category="breakfast">
+        <img src="https://dailydish.co.uk/wp-content/uploads/2023/04/yogurt-granola-breakfast-bowl-healthy.jpg" alt="Granola Bowl">
+        <h2>Granola Bowl</h2>
+        <p>10 mins</p>
+        <div class="rating">★★★★☆</div>
+        <div class="price-box">433</div>
+        <div class="quantity-controls">
+          <div class="quantity-selector">
+            <button class="quantity-btn minus" onclick="changeQuantity('granola-bowl', -1, 433)">-</button>
+            <span class="quantity-display" id="quantity-granola-bowl">0</span>
+            <button class="quantity-btn plus" onclick="changeQuantity('granola-bowl', 1, 433)">+</button>
+          </div>
+          <button class="add-to-cart" onclick="addToCart('granola-bowl', 433)">Add</button>
+        </div>
+      </div>
+
+      <!-- New Dinner -->
+      <div class="card" data-category="dinner">
+        <img src="https://www.allrecipes.com/thmb/8L5gq8V7Kyl3qfoDe5vhCU_rvZI=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/AR-141169-Easy-Indian-Butter-Chicken-DDMFS-4x3-beauty-588ff54d1e0f4a0788906e851e27d540.jpg" alt="Butter Chicken">
+        <h2>Butter Chicken</h2>
+        <p>10 mins</p>
+        <div class="rating">★★★★★</div>
+        <div class="price-box">825</div>
+        <div class="quantity-controls">
+          <div class="quantity-selector">
+            <button class="quantity-btn minus" onclick="changeQuantity('butter-chicken', -1, 825)">-</button>
+            <span class="quantity-display" id="quantity-butter-chicken">0</span>
+            <button class="quantity-btn plus" onclick="changeQuantity('butter-chicken', 1, 825)">+</button>
+          </div>
+          <button class="add-to-cart" onclick="addToCart('butter-chicken', 825)">Add</button>
+        </div>
+      </div>
+      <div class="card" data-category="dinner">
+        <img src="https://i.ytimg.com/vi/xWZeQBLV6q4/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLD2S-TAcIsRv_o6f-cUctv6iS7duw" alt="Chow Mein">
+        <h2>Noodles</h2>
+        <p>10 mins</p>
+        <div class="rating">★★★★☆</div>
+        <div class="price-box">536</div>
+        <div class="quantity-controls">
+          <div class="quantity-selector">
+            <button class="quantity-btn minus" onclick="changeQuantity('noodles', -1, 536)">-</button>
+            <span class="quantity-display" id="quantity-noodles">0</span>
+            <button class="quantity-btn plus" onclick="changeQuantity('noodles', 1, 536)">+</button>
+          </div>
+          <button class="add-to-cart" onclick="addToCart('noodles', 536)">Add</button>
+        </div>
+      </div>
+
+      <!-- New Desserts -->
+      <div class="card" data-category="desserts">
+        <img src="https://img.buzzfeed.com/thumbnailer-prod-us-east-1/video-api/assets/62298.jpg" alt="Chocolate Chip Cookie">
+        <h2>Cookie</h2>
+        <p>10 mins</p>
+        <div class="rating">★★★★★</div>
+        <div class="price-box">165</div>
+        <div class="quantity-controls">
+          <div class="quantity-selector">
+            <button class="quantity-btn minus" onclick="changeQuantity('cookie', -1, 165)">-</button>
+            <span class="quantity-display" id="quantity-cookie">0</span>
+            <button class="quantity-btn plus" onclick="changeQuantity('cookie', 1, 165)">+</button>
+          </div>
+          <button class="add-to-cart" onclick="addToCart('cookie', 165)">Add</button>
+        </div>
+      </div>
+      <div class="card" data-category="desserts">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcThyzrHk8WCZedh_-MeOxAQHTcsI2-i9a1giQ&s" alt="Creme Brulee">
+        <h2>Creme</h2>
+        <p>10 mins</p>
+        <div class="rating">★★★★☆</div>
+        <div class="price-box">412</div>
+        <div class="quantity-controls">
+          <div class="quantity-selector">
+            <button class="quantity-btn minus" onclick="changeQuantity('creme', -1, 412)">-</button>
+            <span class="quantity-display" id="quantity-creme">0</span>
+            <button class="quantity-btn plus" onclick="changeQuantity('creme', 1, 412)">+</button>
+          </div>
+          <button class="add-to-cart" onclick="addToCart('creme', 412)">Add</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navLinks = document.querySelector('.nav-links');
+    let cart = {};
+    let popupTimeout;
+    let orderItems = [];
+
+    // Clear quantities and cart on page load/refresh
+    window.onload = function() {
+        // Reset all quantities to 0
+        document.querySelectorAll('.quantity-display').forEach(display => {
+            display.textContent = '0';
+        });
+
+        // Reset all Add buttons
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+            button.textContent = 'Add';
+        });
+
+        // Initialize cart and order items
+        cart = {};
+        orderItems = JSON.parse(localStorage.getItem('orderItems')) || [];
+    };
+
+    function changeQuantity(itemId, change, price) {
+        try {
+            const quantityElement = document.getElementById(`quantity-${itemId}`);
+            if (!quantityElement) return;
+
+            const container = quantityElement.closest('.quantity-controls');
+            if (!container) return;
+
+            const addButton = container.querySelector('.add-to-cart');
+            if (!addButton) return;
+
+            let currentQuantity = parseInt(quantityElement.textContent) || 0;
+            let newQuantity = currentQuantity + change;
+
+            // Ensure quantity never goes below 0
+            if (newQuantity < 0) {
+                newQuantity = 0;
+            }
+
+            // Add animation class
+            quantityElement.classList.add('changed');
+            setTimeout(() => {
+                quantityElement.classList.remove('changed');
+            }, 300);
+
+            // Update quantity display
+            quantityElement.textContent = newQuantity;
+
+            // Update Add button text
+            if (newQuantity > 0) {
+                addButton.textContent = `Add (${newQuantity})`;
+            } else {
+                addButton.textContent = 'Add';
+            }
+
+            // Update cart
+            if (newQuantity > 0) {
+                const cardElement = quantityElement.closest('.card');
+                if (cardElement) {
+                    const nameElement = cardElement.querySelector('h2');
+                    const itemName = nameElement ? nameElement.textContent.trim() : 'Unknown Item';
+                    cart[itemId] = {
+                        name: itemName,
+                        quantity: newQuantity,
+                        price: price
+                    };
+                }
+            } else {
+                delete cart[itemId];
+            }
+        } catch (error) {
+            console.error('Error in changeQuantity:', error);
+            showPopupMessage('An error occurred while updating quantity', 'error');
+        }
+    }
+
+    function addToCart(itemId, price) {
+        try {
+            const quantityElement = document.getElementById(`quantity-${itemId}`);
+            if (!quantityElement) return;
+
+            const quantity = parseInt(quantityElement.textContent) || 0;
+            
+            if (quantity > 0) {
+                const cardElement = quantityElement.closest('.card');
+                if (cardElement) {
+                    const nameElement = cardElement.querySelector('h2');
+                    const itemName = nameElement ? nameElement.textContent.trim() : 'Unknown Item';
+                    const totalPrice = (price * quantity).toFixed(2);
+
+                    // Create order item
+                    const orderItem = {
+                        id: itemId,
+                        name: itemName,
+                        quantity: quantity,
+                        price: price,
+                        totalPrice: totalPrice
+                    };
+
+                    // Get existing order items from localStorage
+                    let orderItems = JSON.parse(localStorage.getItem('orderItems')) || [];
+                    
+                    // Add new item to order items
+                    orderItems.push(orderItem);
+                    
+                    // Save updated order items to localStorage
+                    localStorage.setItem('orderItems', JSON.stringify(orderItems));
+
+                    // Show success message
+                    showPopupMessage(`${quantity} ${itemName}${quantity > 1 ? 's' : ''} added to cart (₹${totalPrice})`);
+
+                    // Reset quantity and button text
+                    quantityElement.textContent = '0';
+                    const addButton = cardElement.querySelector('.add-to-cart');
+                    if (addButton) {
+                        addButton.textContent = 'Add';
+                    }
+
+                    // Remove item from cart after adding
+                    delete cart[itemId];
+                }
+            } else {
+                showPopupMessage('Please select a quantity first', 'error');
+            }
+        } catch (error) {
+            console.error('Error in addToCart:', error);
+            showPopupMessage('An error occurred while adding to cart', 'error');
+        }
+    }
+
+    // Initialize all quantity controls when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+        try {
+            document.querySelectorAll('.quantity-controls').forEach(container => {
+                const quantityElement = container.querySelector('.quantity-display');
+                const addButton = container.querySelector('.add-to-cart');
+                
+                if (quantityElement && addButton) {
+                    // Reset to initial values
+                    quantityElement.textContent = '0';
+                    addButton.textContent = 'Add';
+                }
+            });
+        } catch (error) {
+            console.error('Error in initialization:', error);
+        }
+    });
+
+    const filterButtons = document.querySelectorAll(".filter-btn");
+    const cards = document.querySelectorAll(".menu-grid .card");
+
+    document.querySelectorAll(".nav-links a").forEach(link => {
+      link.addEventListener("click", () => {
+        document.querySelectorAll(".nav-links a").forEach(l => l.classList.remove("active"));
+        link.classList.add("active");
+      });
+    });
+
+    filterButtons.forEach(button => {
+      button.addEventListener("click", () => {
+        document.querySelector(".filters .active").classList.remove("active");
+        button.classList.add("active");
+
+        const filter = button.getAttribute("data-filter");
+
+        cards.forEach(card => {
+          const category = card.getAttribute("data-category");
+          if (filter === "all" || filter === category) {
+            card.style.display = "block";
+          } else {
+            card.style.display = "none";
+          }
+        });
+      });
+    });
+
+    // Enhanced cart functionality
+    function showPopupMessage(message, type = 'success') {
+        // Remove any existing popup
+        const existingPopup = document.querySelector('.popup-message');
+        if (existingPopup) {
+            existingPopup.remove();
+        }
+
+        const popup = document.createElement('div');
+        popup.className = 'popup-message';
+        popup.style.backgroundColor = type === 'success' ? '#4CAF50' : '#f44336';
+        popup.textContent = message;
+        document.body.appendChild(popup);
+
+        // Clear any existing timeout
+        if (popupTimeout) {
+            clearTimeout(popupTimeout);
+        }
+
+        // Add fade out animation before removing
+        popupTimeout = setTimeout(() => {
+            popup.style.animation = 'fadeOut 0.3s ease-out forwards';
+            setTimeout(() => {
+                popup.remove();
+            }, 300);
+        }, 3000);
+    }
+  </script>
+</body>
+</html>

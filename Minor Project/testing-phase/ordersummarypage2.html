@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Summary - Swift Bites Restaurant</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    /* Remove unnecessary animations and transitions */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background-color: #f5f5f5;
+      padding: 15px;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 0 auto;
+      background: white;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 25px;
+      padding: 15px 0;
+      border-bottom: 2px solid #f7931e;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .logo-icon {
+      font-size: 2.2em;
+      color: #f7931e;
+    }
+
+    .logo-text {
+      font-size: 1.8em;
+      font-weight: 700;
+      color: #333;
+      letter-spacing: 1px;
+    }
+
+    .logo-text span {
+      color: #f7931e;
+    }
+
+    .order-info {
+      color: #666;
+      font-size: 0.9em;
+      margin-top: 10px;
+    }
+
+    .order-number {
+      font-weight: 600;
+      color: #f7931e;
+    }
+
+    .order-date {
+      color: #888;
+    }
+
+    .order-items {
+      margin: 30px 0;
+    }
+
+    .order-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px;
+      border-bottom: 1px solid #eee;
+      margin-bottom: 8px;
+    }
+
+    .item-details {
+      flex-grow: 1;
+    }
+
+    .item-name {
+      font-weight: 500;
+      color: #333;
+      margin-bottom: 5px;
+      display: block;
+    }
+
+    .item-quantity {
+      color: #666;
+      font-size: 0.9em;
+    }
+
+    .item-price {
+      font-weight: 600;
+      color: #f7931e;
+      min-width: 80px;
+      text-align: right;
+      margin: 0 20px;
+    }
+
+    .item-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .quantity-btn {
+      background: #f7931e;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      width: 25px;
+      height: 25px;
+      cursor: pointer;
+      font-size: 1.2em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .quantity-btn:hover {
+      background: #e67e00;
+    }
+
+    .quantity-display {
+      min-width: 30px;
+      text-align: center;
+    }
+
+    .remove-btn {
+      background: #ff4444;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 5px 10px;
+      cursor: pointer;
+      font-size: 0.8em;
+    }
+
+    .remove-btn:hover {
+      background: #cc0000;
+    }
+
+    .summary {
+      background: #f8f8f8;
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 25px;
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      color: #666;
+    }
+
+    .summary-row span,
+    .total-row span {
+      transition: all 0.3s ease;
+    }
+
+    .total-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 15px 0;
+      border-top: 2px solid #ddd;
+      font-weight: 600;
+      color: #333;
+      font-size: 1.2em;
+      margin-top: 10px;
+    }
+
+    .price {
+      transition: all 0.3s ease;
+      color: #f7931e;
+    }
+
+    .total-price {
+      transition: all 0.3s ease;
+      color: #f7931e;
+      font-weight: 700;
+    }
+
+    .action-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 25px;
+      gap: 12px;
+    }
+
+    .back-btn, .proceed-btn {
+      width: 100%;
+      padding: 12px;
+      border-radius: 6px;
+      font-size: 0.95em;
+    }
+
+    .back-btn {
+      border: 2px solid #f7931e;
+      background: white;
+      color: #f7931e;
+    }
+
+    .back-btn:hover {
+      background: #f7931e;
+      color: white;
+    }
+
+    .proceed-btn {
+      border: none;
+      background: #f7931e;
+      color: white;
+    }
+
+    .proceed-btn:hover {
+      background: #e67e00;
+    }
+
+    .empty-cart {
+      text-align: center;
+      padding: 40px 0;
+    }
+
+    .empty-cart h3 {
+      color: #666;
+      margin-bottom: 15px;
+    }
+
+    .empty-cart p {
+      color: #888;
+    }
+
+    .secure-text {
+      text-align: center;
+      color: #666;
+      margin-top: 20px;
+      font-size: 0.9em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .secure-text svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateX(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .container {
+      animation: fadeIn 0.5s ease-out;
+    }
+
+    /* Loading animation */
+    .loading {
+      text-align: center;
+      padding: 40px 0;
+    }
+
+    .loading::after {
+      content: '';
+      display: inline-block;
+      width: 30px;
+      height: 30px;
+      border: 3px solid #f3f3f3;
+      border-top: 3px solid #f7931e;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Replace shimmer with circular loading animation */
+    .loading-animation {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 30px;
+      gap: 15px;
+    }
+
+    .loading-text {
+      color: #666;
+      font-size: 0.9em;
+      margin-bottom: 10px;
+    }
+
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #f7931e;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    /* Faster fade in animation */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(5px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .order-item {
+      animation: fadeIn 0.2s ease-out forwards;
+      opacity: 0;
+    }
+
+    .order-item:nth-child(1) { animation-delay: 0.05s; }
+    .order-item:nth-child(2) { animation-delay: 0.1s; }
+    .order-item:nth-child(3) { animation-delay: 0.15s; }
+    .order-item:nth-child(4) { animation-delay: 0.2s; }
+    .order-item:nth-child(5) { animation-delay: 0.25s; }
+
+    /* Quick pulse animation for remove button */
+    @keyframes quickPulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    .remove-btn:hover {
+      animation: quickPulse 0.2s ease-in-out;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding: 10px;
+      }
+
+      .container {
+        padding: 20px;
+      }
+
+      .logo-text {
+        font-size: 1.6em;
+      }
+
+      .logo-icon {
+        font-size: 2em;
+      }
+
+      .order-item {
+        padding: 10px;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .item-controls {
+        width: 100%;
+        justify-content: flex-end;
+      }
+    }
+
+    .empty-cart-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 300px;
+        text-align: center;
+        padding: 20px;
+    }
+
+    .empty-cart-message {
+        font-size: 1.5rem;
+        color: #666;
+        margin-bottom: 10px;
+        font-weight: 500;
+    }
+
+    .empty-cart-subtext {
+        font-size: 1.1rem;
+        color: #888;
+        margin-bottom: 25px;
+        font-weight: 400;
+    }
+
+    .back-to-menu-btn {
+        background: #f7931e;
+        color: white;
+        border: none;
+        padding: 12px 25px;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-block;
+        margin-top: 15px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .back-to-menu-btn:hover {
+        background: #e67e00;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .back-to-menu-btn:active {
+        transform: translateY(0);
+    }
+
+    /* Enhanced Proceed to Payment Button Animations */
+    .proceed-btn {
+      border: none;
+      background: #f7931e;
+      color: white;
+      padding: 15px 25px;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      box-shadow: 0 4px 15px rgba(247, 147, 30, 0.2);
+      animation: buttonPulse 2s infinite;
+    }
+
+    .proceed-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        120deg,
+        transparent,
+        rgba(255, 255, 255, 0.3),
+        transparent
+      );
+      transition: all 0.6s;
+    }
+
+    .proceed-btn:hover {
+      transform: translateY(-3px) scale(1.02);
+      background: #e67e00;
+      box-shadow: 0 6px 20px rgba(247, 147, 30, 0.4);
+    }
+
+    .proceed-btn:hover::before {
+      left: 100%;
+    }
+
+    .proceed-btn:active {
+      transform: translateY(2px);
+      box-shadow: 0 2px 10px rgba(247, 147, 30, 0.3);
+    }
+
+    @keyframes buttonPulse {
+      0% {
+        box-shadow: 0 4px 15px rgba(247, 147, 30, 0.2);
+      }
+      50% {
+        box-shadow: 0 4px 25px rgba(247, 147, 30, 0.4);
+      }
+      100% {
+        box-shadow: 0 4px 15px rgba(247, 147, 30, 0.2);
+      }
+    }
+
+    /* Add shine effect for button */
+    @keyframes shine {
+      0% {
+        left: -100%;
+      }
+      100% {
+        left: 100%;
+      }
+    }
+
+    /* Container animation for proceed button */
+    .action-buttons {
+      display: flex;
+      justify-content: center;
+      margin-top: 25px;
+      gap: 15px;
+      padding: 10px;
+      animation: containerFadeIn 0.5s ease-out;
+    }
+
+    @keyframes containerFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Add focus state for accessibility */
+    .proceed-btn:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(247, 147, 30, 0.5);
+    }
+
+    /* Add loading state animation */
+    .proceed-btn.loading {
+      position: relative;
+      color: transparent;
+    }
+
+    .proceed-btn.loading::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 20px;
+      height: 20px;
+      border: 2px solid #fff;
+      border-radius: 50%;
+      border-top-color: transparent;
+      animation: buttonSpin 0.8s linear infinite;
+      transform: translate(-50%, -50%);
+    }
+
+    @keyframes buttonSpin {
+      to {
+        transform: translate(-50%, -50%) rotate(360deg);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="logo-container">
+        <span class="logo-icon">🍛</span>
+        <h1 class="logo-text">SWIFT<span>BITES</span></h1>
+      </div>
+      <div class="order-info">
+        Order #<span id="orderNumber" class="order-number">Loading...</span><br>
+        <span id="orderDate" class="order-date">Loading...</span>
+      </div>
+    </div>
+
+    <div id="orderItems" class="order-items">
+      <!-- Order items will be displayed here -->
+    </div>
+
+    <div class="summary">
+      <div class="summary-row">
+        <span>Subtotal</span>
+        <span id="subtotal" class="price">₹0.00</span>
+      </div>
+      <div class="summary-row">
+        <span>Delivery Fee</span>
+        <span class="price">₹2.99</span>
+      </div>
+      <div class="summary-row">
+        <span>Tax (10%)</span>
+        <span id="tax" class="price">₹0.00</span>
+      </div>
+      <div class="total-row">
+        <span>Total</span>
+        <span id="total" class="total-price">₹2.99</span>
+      </div>
+    </div>
+
+    <div class="action-buttons">
+      <button class="back-btn" onclick="goBackToMenu()">Back to Menu</button>
+      <button class="proceed-btn" onclick="proceedToPayment()">Proceed to Payment</button>
+    </div>
+
+    <p class="secure-text">
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 6c1.4 0 2.5 1.1 2.5 2.5V13c.6 0 1 .4 1 1v4c0 .6-.4 1-1 1h-5c-.6 0-1-.4-1-1v-4c0-.6.4-1 1-1V9.5C9.5 8.1 10.6 7 12 7zm0 2c-.3 0-.5.2-.5.5V13h1V9.5c0-.3-.2-.5-.5-.5z"/>
+      </svg>
+      Your payment is secure with us. Enjoy safe and seamless transactions.
+    </p>
+  </div>
+
+  <script>
+    // Optimize DOM operations
+    document.addEventListener('DOMContentLoaded', function() {
+        // Cache DOM elements
+        const orderItemsContainer = document.getElementById('orderItems');
+        const subtotalElement = document.getElementById('subtotal');
+        const taxElement = document.getElementById('tax');
+        const totalElement = document.getElementById('total');
+        
+        // Set order info
+        const now = new Date();
+        document.getElementById('orderNumber').textContent = Math.floor(Math.random() * 90000) + 10000;
+        document.getElementById('orderDate').textContent = now.toLocaleDateString() + ' at ' + 
+          now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+        // Load and display items
+        const orderItems = JSON.parse(localStorage.getItem('orderItems')) || [];
+        
+        if (orderItems.length === 0) {
+            // Clear the existing content
+            orderItemsContainer.innerHTML = '';
+            
+            // Create and append empty cart message with button
+            const emptyCartContainer = document.createElement('div');
+            emptyCartContainer.className = 'empty-cart-container';
+            
+            emptyCartContainer.innerHTML = `
+                <div class="empty-cart-message">Your Cart is Empty</div>
+                <div class="empty-cart-subtext">Adding food to a menu</div>
+                <a href="Menupage.html" class="back-to-menu-btn">Back to Menu</a>
+            `;
+            
+            orderItemsContainer.appendChild(emptyCartContainer);
+            
+            // Hide the summary section if cart is empty
+            document.querySelector('.summary').style.display = 'none';
+            // Also hide the action buttons when cart is empty
+            document.querySelector('.action-buttons').style.display = 'none';
+        } else {
+            // Calculate totals
+        let subtotal = 0;
+            const itemsHTML = orderItems.map((item, index) => {
+                subtotal += parseFloat(item.totalPrice);
+                return `
+                    <div class="order-item">
+            <div class="item-details">
+                            <span class="item-name">${item.name}</span>
+              <div class="item-quantity">Quantity: ${item.quantity}</div>
+            </div>
+                        <div class="item-price">₹${parseFloat(item.totalPrice).toFixed(2)}</div>
+            <div class="item-controls">
+                            <button class="quantity-btn minus-btn" onclick="updateQuantity(${index}, -1)">-</button>
+                            <span class="quantity-display">${item.quantity}</span>
+                            <button class="quantity-btn plus-btn" onclick="updateQuantity(${index}, 1)">+</button>
+              <button class="remove-btn" onclick="removeItem(${index})">Remove</button>
+                        </div>
+            </div>
+          `;
+            }).join('');
+
+            // Update DOM once
+            orderItemsContainer.innerHTML = itemsHTML;
+
+            // Update summary
+            const tax = subtotal * 0.10;
+            const deliveryFee = 2.99;
+            const total = subtotal + tax + deliveryFee;
+
+            subtotalElement.textContent = `₹${subtotal.toFixed(2)}`;
+            taxElement.textContent = `₹${tax.toFixed(2)}`;
+            totalElement.textContent = `₹${total.toFixed(2)}`;
+    }
+    });
+
+    // Optimize quantity update function
+    function updateQuantity(index, change) {
+        const orderItems = JSON.parse(localStorage.getItem('orderItems')) || [];
+        if (index >= 0 && index < orderItems.length) {
+            const item = orderItems[index];
+          const newQuantity = item.quantity + change;
+          
+            if (newQuantity > 0) {
+                item.quantity = newQuantity;
+                item.totalPrice = (item.price * newQuantity).toFixed(2);
+                localStorage.setItem('orderItems', JSON.stringify(orderItems));
+                window.location.reload();
+            } else {
+            removeItem(index);
+            }
+        }
+          }
+
+    // Optimize remove item function
+    function removeItem(index) {
+        const orderItems = JSON.parse(localStorage.getItem('orderItems')) || [];
+        if (index >= 0 && index < orderItems.length) {
+            orderItems.splice(index, 1);
+            localStorage.setItem('orderItems', JSON.stringify(orderItems));
+            window.location.reload();
+      }
+    }
+
+    // Optimize navigation functions
+    function goBackToMenu() {
+        window.location.href = 'Menupage.html';
+    }
+
+    function proceedToPayment() {
+        const orderItems = JSON.parse(localStorage.getItem('orderItems')) || [];
+        const proceedBtn = document.querySelector('.proceed-btn');
+        
+        if (orderItems.length === 0) {
+        alert('Please add items to your cart before proceeding to payment');
+        return;
+      }
+
+        // Add loading state
+        proceedBtn.classList.add('loading');
+        proceedBtn.disabled = true;
+
+        // Simulate loading for smooth transition
+        setTimeout(() => {
+      window.location.href = 'checkoutpage.html';
+        }, 800);
+    }
+
+    // Add button hover animation on mount
+    document.addEventListener('DOMContentLoaded', function() {
+        const proceedBtn = document.querySelector('.proceed-btn');
+        if (proceedBtn) {
+            proceedBtn.addEventListener('mouseover', function() {
+                this.style.animation = 'none';
+                setTimeout(() => {
+                    this.style.animation = 'buttonPulse 2s infinite';
+                }, 10);
+            });
+        }
+    });
+  </script>
+</body>
+</html>

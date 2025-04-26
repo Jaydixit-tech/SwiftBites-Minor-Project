@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thank You - SwiftBites</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2.5rem 1rem;
+    }
+
+    .header {
+      background: rgba(247, 147, 30, 0.95);
+      backdrop-filter: blur(10px);
+      width: 100%;
+      padding: 0.8rem 2rem;
+      position: fixed;
+      top: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      z-index: 1000;
+      transition: all 0.3s ease;
+      height: 65px;
+    }
+
+    .header:hover {
+      background: rgba(247, 147, 30, 0.98);
+    }
+
+    .logo {
+      color: white;
+      font-size: 1.5rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .logo:hover {
+      transform: scale(1.05);
+      text-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      backdrop-filter: blur(5px);
+    }
+
+    .nav-button {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      padding: 0.4rem 1rem;
+      border-radius: 20px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      font-size: 1rem;
+    }
+
+    .nav-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.1);
+      transition: transform 0.5s ease;
+      transform: skewX(-15deg);
+    }
+
+    .nav-button:hover::before {
+      transform: translateX(200%) skewX(-15deg);
+    }
+
+    .nav-button:hover {
+      transform: translateY(-3px);
+      border-color: white;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+
+    .nav-button.active {
+      background: white;
+      color: #f7931e;
+      border-color: white;
+    }
+
+    .thank-you-container {
+      background: white;
+      padding: 2.5rem;
+      border-radius: 25px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+      text-align: center;
+      max-width: 700px;
+      margin: 2rem auto 2rem;
+      animation: fadeInUp 0.8s ease;
+      position: relative;
+      width: 85%;
+      overflow: hidden;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .success-animation {
+      position: relative;
+      width: 100px;
+      height: 100px;
+      margin: 0 auto 2rem;
+    }
+
+    .checkmark {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      display: block;
+      stroke-width: 2;
+      stroke: #4CAF50;
+      stroke-miterlimit: 10;
+      box-shadow: inset 0px 0px 0px #4CAF50;
+      animation: fill 0.4s ease-in-out 0.4s forwards, scale 0.3s ease-in-out 0.9s both;
+    }
+
+    .checkmark-circle {
+      stroke-dasharray: 166;
+      stroke-dashoffset: 166;
+      stroke-width: 2;
+      stroke-miterlimit: 10;
+      stroke: #4CAF50;
+      fill: none;
+      animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+    }
+
+    .checkmark-check {
+      transform-origin: 50% 50%;
+      stroke-dasharray: 48;
+      stroke-dashoffset: 48;
+      animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
+    }
+
+    @keyframes stroke {
+      100% {
+        stroke-dashoffset: 0;
+      }
+    }
+
+    @keyframes scale {
+      0%, 100% {
+        transform: none;
+      }
+      50% {
+        transform: scale3d(1.1, 1.1, 1);
+      }
+    }
+
+    @keyframes fill {
+      100% {
+        box-shadow: inset 0px 0px 0px 30px #fff;
+      }
+    }
+
+    h1 {
+      color: #333;
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      animation: fadeIn 1s ease 1s forwards;
+      opacity: 0;
+    }
+
+    p {
+      color: #666;
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+      line-height: 1.6;
+      animation: fadeIn 1s ease 1.2s forwards;
+      opacity: 0;
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
+    }
+
+    .order-details {
+      background: #f8f9fa;
+      padding: 1.5rem;
+      border-radius: 12px;
+      margin: 2rem 0;
+      text-align: left;
+      animation: fadeIn 1s ease 1.4s forwards;
+      opacity: 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .order-details::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+      animation: shimmer 2s infinite;
+    }
+
+    @keyframes shimmer {
+      0% {
+        transform: translateX(-100%);
+      }
+      100% {
+        transform: translateX(100%);
+      }
+    }
+
+    .order-details h3 {
+      color: #333;
+      margin-bottom: 1rem;
+      font-size: 1.3rem;
+    }
+
+    .order-details p {
+      color: #666;
+      margin-bottom: 0.8rem;
+      font-size: 1rem;
+      animation: none;
+      opacity: 1;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .order-details p::before {
+      content: '✓';
+      color: #4CAF50;
+      font-weight: bold;
+    }
+
+    .next-steps {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin-top: 2rem;
+      animation: fadeIn 1s ease 1.6s forwards;
+      opacity: 0;
+    }
+
+    .btn {
+      padding: 0.8rem 2rem;
+      border: none;
+      border-radius: 40px;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-primary {
+      background: #f7931e;
+      color: white;
+    }
+
+    .btn-secondary {
+      background: #f8f9fa;
+      color: #333;
+      border: 1px solid #ddd;
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+
+    .btn-primary:hover {
+      background: #e67e00;
+    }
+
+    .btn-secondary:hover {
+      background: #f0f0f0;
+    }
+
+    .btn::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 5px;
+      height: 5px;
+      background: rgba(255, 255, 255, 0.5);
+      opacity: 0;
+      border-radius: 100%;
+      transform: scale(1, 1) translate(-50%);
+      transform-origin: 50% 50%;
+    }
+
+    .btn:focus:not(:active)::after {
+      animation: ripple 1s ease-out;
+    }
+
+    @keyframes ripple {
+      0% {
+        transform: scale(0, 0);
+        opacity: 0.5;
+      }
+      100% {
+        transform: scale(20, 20);
+        opacity: 0;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .thank-you-container {
+        padding: 2.5rem;
+        margin: 2rem auto;
+        width: 95%;
+      }
+
+      .success-animation {
+        width: 100px;
+        height: 100px;
+        margin: 0 auto 2rem;
+      }
+
+      h1 {
+        font-size: 2.5rem;
+      }
+
+      p {
+        font-size: 1.1rem;
+      }
+
+      .order-details {
+        padding: 1.5rem;
+      }
+
+      .next-steps {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .btn {
+        width: 100%;
+        padding: 0.8rem;
+      }
+
+      .header {
+        padding: 0.8rem 1rem;
+        height: auto;
+        min-height: 65px;
+      }
+
+      .nav-links {
+        flex-direction: column;
+        width: 100%;
+        background: rgba(255, 255, 255, 0.15);
+        padding: 0.5rem;
+      }
+
+      .nav-button {
+        text-align: center;
+        padding: 0.5rem;
+        font-size: 0.95rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="logo" onclick="window.location.href='test1.html'">🍛 SWIFTBITES</div>
+    <nav class="nav-links">
+      <a href="test1.html" class="nav-button">Home</a>
+      <a href="Menupage.html" class="nav-button">Menu</a>
+      <a href="OrderSummarypage.html" class="nav-button">Order Summary</a>
+      <a href="checkoutpage.html" class="nav-button">Checkout</a>
+    </nav>
+  </header>
+
+  <div class="thank-you-container">
+    <div class="success-animation">
+      <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+        <circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none"/>
+        <path class="checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+      </svg>
+    </div>
+
+    <h1>Thank You!</h1>
+    <p>Your order has been successfully placed. We're preparing your delicious meal with care.</p>
+
+    <div class="order-details">
+      <h3>Order Details</h3>
+      <p>Order ID: #SWB12345</p>
+      <p>Estimated Delivery: 30-45 minutes</p>
+      <p>Payment Method: Credit Card</p>
+    </div>
+
+    <div class="next-steps">
+      <a href="test1.html" class="btn btn-primary">Back to Home</a>
+      <a href="Menupage.html" class="btn btn-secondary">Order Again</a>
+    </div>
+  </div>
+
+  <script>
+    // Add smooth scroll behavior
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+
+    // Add active class to current page
+    document.addEventListener('DOMContentLoaded', function() {
+      const currentLocation = window.location.pathname;
+      const navButtons = document.querySelectorAll('.nav-button');
+      
+      navButtons.forEach(button => {
+        if(button.getAttribute('href') === currentLocation.split('/').pop()) {
+          button.classList.add('active');
+        }
+      });
+
+      // Add hover animation
+      navButtons.forEach(button => {
+        button.addEventListener('mouseover', function() {
+          this.style.transform = 'translateY(-3px)';
+        });
+
+        button.addEventListener('mouseout', function() {
+          this.style.transform = 'translateY(0)';
+        });
+      });
+    });
+  </script>
+</body>
+</html>
+

@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Checkout Page</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;800&display=swap" rel="stylesheet">
+  <style>
+    /* Reset & Global Styles */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #ffffff;
+      color: #333;
+      position: relative;
+      min-height: 100vh;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('https://source.unsplash.com/random/1920x1080/?food,indian-food');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      opacity: 0.3;
+      z-index: -1;
+      animation: backgroundChange 20s infinite;
+    }
+
+    @keyframes backgroundChange {
+      0% {
+        background-image: url('https://source.unsplash.com/random/1920x1080/?food,indian-food');
+      }
+      33% {
+        background-image: url('https://source.unsplash.com/random/1920x1080/?food,curry');
+      }
+      66% {
+        background-image: url('https://source.unsplash.com/random/1920x1080/?food,spicy');
+      }
+    }
+
+    /* Add overlay to sections for better readability */
+    .delivery-details,
+    .payment-options {
+      background-color: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(5px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Update header to be semi-transparent */
+    .header {
+      background-color: rgba(255, 153, 51, 0.95);
+      backdrop-filter: blur(5px);
+    }
+
+    /* Make form inputs more visible on the background */
+    .delivery-details form input,
+    .payment-options input[type="text"] {
+      background-color: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    /* Add subtle animation to the background */
+    @keyframes subtleZoom {
+      0% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.02);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    body::before {
+      animation: subtleZoom 30s infinite ease-in-out;
+    }
+
+    /* Header Styles */
+    .header {
+      background-color: #FF9933;
+      padding: 0.75rem 2rem;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: white;
+      font-size: 1.25rem;
+      font-weight: 800;
+      text-decoration: none;
+      margin-bottom: 0;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      justify-content: flex-end;
+      background-color: rgba(255, 255, 255, 0.1);
+      padding: 0.4rem 1.5rem;
+      border-radius: 4px;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+      padding: 0.4rem 0.8rem;
+    }
+
+    .nav-links a:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+      border-radius: 4px;
+    }
+
+    /* Main Layout */
+    main {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    /* Sections */
+    .delivery-details,
+    .payment-options {
+      background-color: #f7f7f7;
+      padding: 1.5rem;
+      border-radius: 0.5rem;
+      margin-bottom: 2rem;
+    }
+    .delivery-details h2,
+    .payment-options h2 {
+      margin-bottom: 1rem;
+      font-size: 1.25rem;
+    }
+
+    /* Delivery Details Form */
+    .delivery-details form {
+      display: flex;
+      flex-direction: column;
+    }
+    .delivery-details form label {
+      margin: 0.5rem 0 0.25rem;
+      font-weight: bold;
+    }
+    .delivery-details form input {
+      padding: 0.5rem;
+      margin-bottom: 1rem;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .delivery-details form button {
+      background-color: #6c63ff;
+      border: none;
+      color: #fff;
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+      width: fit-content;
+      transition: all 0.3s ease;
+    }
+
+    /* Payment Options */
+    .payment-options form {
+      display: flex;
+      flex-direction: column;
+    }
+    .payment-options .method {
+      margin-bottom: 1rem;
+    }
+    .payment-options .method input[type="radio"] {
+      margin-right: 0.5rem;
+    }
+    .payment-options .method label {
+      font-weight: bold;
+    }
+    .payment-options .method input[type="text"] {
+      display: block;
+      margin: 0.5rem 0;
+      padding: 0.5rem;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      width: 100%;
+      max-width: 300px; /* limit width of card fields */
+    }
+    .payment-options button {
+      background-color: #6c63ff;
+      border: none;
+      color: #fff;
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+      width: fit-content;
+    }
+
+    /* Responsive Layout (Media Query) */
+    @media (min-width: 768px) {
+      main {
+        display: flex;
+        gap: 2rem;
+      }
+      .delivery-details,
+      .payment-options {
+        width: 48%;
+        margin-bottom: 0;
+      }
+    }
+
+    /* New Payment Method Styles */
+    .payment-method {
+      margin-bottom: 1.5rem;
+      padding: 1rem;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background: white;
+    }
+
+    .payment-method.selected {
+      border: 2px solid #6c63ff;
+      background: #f8f9ff;
+    }
+
+    .payment-method-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .payment-method-logo {
+      width: 40px;
+      height: 40px;
+      object-fit: contain;
+    }
+
+    .qr-code-container {
+      text-align: center;
+      padding: 2rem;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      margin: 1.5rem 0;
+      max-width: 400px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .qr-code-container p {
+      font-size: 1.1rem;
+      color: #333;
+      margin-bottom: 1rem;
+      font-weight: 500;
+    }
+
+    .qr-code {
+      width: 250px;
+      height: 250px;
+      margin: 1.5rem auto;
+      padding: 1rem;
+      background: white;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .qr-code:hover {
+      transform: scale(1.02);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+    }
+
+    .qr-code img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .upi-id {
+      background: #f8f8f8;
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      font-family: 'Courier New', monospace;
+      margin: 1rem 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border: 1px solid #e0e0e0;
+    }
+
+    .upi-id .copy-button {
+      background: #6c63ff;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .upi-id .copy-button:hover {
+      background: #5a52e0;
+      transform: translateY(-1px);
+    }
+
+    .upi-id .copy-button:active {
+      transform: translateY(0);
+    }
+
+    .upi-id .copy-button::before {
+      content: "📋";
+      font-size: 1rem;
+    }
+
+    .security-badge {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #4CAF50;
+      font-size: 0.9rem;
+      margin-top: 1rem;
+    }
+
+    .payment-instructions {
+      font-size: 0.9rem;
+      color: #666;
+      margin: 1rem 0;
+    }
+
+    .payment-success {
+      display: none;
+      text-align: center;
+      padding: 2rem;
+      background: #4CAF50;
+      color: white;
+      border-radius: 8px;
+      margin-top: 1rem;
+    }
+
+    .payment-success.show {
+      display: block;
+      animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* Button Animation Styles */
+    .animated-button {
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      transform: translateY(0);
+    }
+
+    .animated-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(108, 99, 255, 0.3);
+    }
+
+    .animated-button:active {
+      transform: translateY(1px);
+    }
+
+    .animated-button::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 5px;
+      height: 5px;
+      background: rgba(255, 255, 255, 0.5);
+      opacity: 0;
+      border-radius: 100%;
+      transform: scale(1) translate(-50%, -50%);
+      transform-origin: 50% 50%;
+    }
+
+    .animated-button:focus:not(:active)::after {
+      animation: ripple 1s ease-out;
+    }
+
+    @keyframes ripple {
+      0% {
+        transform: scale(0);
+        opacity: 0.5;
+      }
+      100% {
+        transform: scale(20);
+        opacity: 0;
+      }
+    }
+
+    .button-loading {
+      position: relative;
+      pointer-events: none;
+      opacity: 0.7;
+    }
+
+    .button-loading::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      margin: auto;
+      border: 3px solid transparent;
+      border-top-color: white;
+      border-radius: 50%;
+      animation: button-loading-spinner 1s ease infinite;
+    }
+
+    @keyframes button-loading-spinner {
+      from {
+        transform: rotate(0turn);
+      }
+      to {
+        transform: rotate(1turn);
+      }
+    }
+
+    .button-success {
+      background-color: #4CAF50 !important;
+    }
+
+    .button-success::after {
+      content: '✓';
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+      font-size: 20px;
+    }
+
+    /* Simplified Card Animation */
+    .payment-method {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .payment-method:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .payment-method.selected {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 16px rgba(108, 99, 255, 0.2);
+    }
+
+    /* Simplified Form Input Animation */
+    .delivery-details form input,
+    .payment-options input[type="text"] {
+      transition: all 0.3s ease;
+    }
+
+    .delivery-details form input:focus,
+    .payment-options input[type="text"]:focus {
+      box-shadow: 0 0 0 2px rgba(108, 99, 255, 0.2);
+    }
+
+    /* Simplified Button Animation */
+    .animated-button {
+      transition: all 0.3s ease;
+    }
+
+    .animated-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(108, 99, 255, 0.2);
+    }
+
+    .animated-button:active {
+      transform: translateY(1px);
+    }
+
+    /* Simplified Section Animation */
+    .delivery-details,
+    .payment-options {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .delivery-details:hover,
+    .payment-options:hover {
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Simplified Success Message Animation */
+    .payment-success {
+      transition: all 0.3s ease;
+      opacity: 0;
+    }
+
+    .payment-success.show {
+      opacity: 1;
+    }
+
+    /* Simplified QR Code Animation */
+    .qr-code {
+      transition: transform 0.3s ease;
+    }
+
+    .qr-code:hover {
+      transform: scale(1.02);
+    }
+
+    /* Simplified Header Animation */
+    .header {
+      transition: box-shadow 0.3s ease;
+    }
+
+    .header:hover {
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Simplified Logo Animation */
+    .logo {
+      transition: transform 0.3s ease;
+    }
+
+    .logo:hover {
+      transform: scale(1.05);
+    }
+
+    /* Simplified Navigation Links Animation */
+    .nav-links a {
+      transition: all 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    /* Simplified Security Badge Animation */
+    .security-badge {
+      transition: all 0.3s ease;
+    }
+
+    .security-badge:hover {
+      transform: scale(1.05);
+    }
+
+    /* Simplified Copy Button Animation */
+    .copy-button {
+      transition: all 0.3s ease;
+    }
+
+    .copy-button:hover {
+      transform: scale(1.05);
+    }
+
+    /* Simplified Form Labels Animation */
+    .delivery-details form label {
+      transition: all 0.3s ease;
+    }
+
+    .delivery-details form label:hover {
+      color: #6c63ff;
+    }
+
+    /* Simplified Ripple Effect */
+    @keyframes ripple {
+      0% {
+        transform: scale(0);
+        opacity: 0.5;
+      }
+      100% {
+        transform: scale(20);
+        opacity: 0;
+      }
+    }
+
+    /* Notification Styles */
+    .notification {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 15px 25px;
+      border-radius: 4px;
+      color: white;
+      font-weight: 500;
+      opacity: 0;
+      transform: translateY(-20px);
+      transition: all 0.3s ease;
+      z-index: 1000;
+    }
+
+    .notification.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .notification.success {
+      background-color: #4CAF50;
+    }
+
+    .notification.error {
+      background-color: #f44336;
+    }
+
+    /* Loading Spinner */
+    .loading-spinner {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(255,255,255,.3);
+      border-radius: 50%;
+      border-top-color: #fff;
+      animation: spin 1s ease-in-out infinite;
+      margin-right: 10px;
+      display: none;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .button-loading .loading-spinner {
+      display: inline-block;
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="logo" onclick="window.location.href='test1.html'" style="cursor: pointer;">
+      🍛 SWIFTBITES
+    </div>
+    <nav class="nav-links">
+      <a href="test1.html" class="home-btn">Home</a>
+      <a href="Menupage.html" class="menu-btn">Menu</a>
+      <a href="OrderSummarypage.html" class="order-summary-btn">Order Summary</a>
+      <a href="checkoutpage.html" class="checkout-btn">Checkout</a>
+    </nav>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <!-- Delivery Details Section -->
+    <section class="delivery-details">
+      <h2>Delivery Details</h2>
+      <form id="deliveryForm">
+        <label for="name">Name</label>
+        <input type="text" id="name" placeholder="Enter Name" required>
+
+        <label for="address">Address</label>
+        <input type="text" id="address" placeholder="Enter Address" required>
+
+        <label for="city">City</label>
+        <input type="text" id="city" placeholder="Enter City" required>
+
+        <label for="zipCode">Zip Code</label>
+        <input type="text" id="zipCode" placeholder="Enter Zip Code" required>
+
+        <label for="phoneNumber">Phone Number</label>
+        <input type="text" id="phoneNumber" placeholder="Enter Phone Number" required>
+
+        <button type="submit" class="animated-button" id="saveDetailsBtn">Save your details</button>
+      </form>
+    </section>
+
+    <!-- Updated Payment Options Section -->
+    <section class="payment-options">
+      <h2>Payment Options</h2>
+      <form id="paymentForm">
+        <!-- Credit Card Option -->
+        <div class="payment-method" onclick="selectPaymentMethod('creditCard')">
+          <div class="payment-method-header">
+            <input type="radio" id="creditCard" name="paymentMethod" value="creditCard" checked>
+            <img src="https://cdn-icons-png.flaticon.com/512/196/196578.png" alt="Credit Card" class="payment-method-logo">
+            <label for="creditCard">Credit Card</label>
+          </div>
+          <div class="payment-details">
+            <input type="text" placeholder="Card number (4444-4444-4444-4444)" pattern="[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}" required>
+            <input type="text" placeholder="Expiry Date (MM/YY)" pattern="(0[1-9]|1[0-2])\/([0-9]{2})" required>
+            <input type="text" placeholder="CVV" pattern="[0-9]{3}" required>
+          </div>
+        </div>
+
+        <!-- Google Pay Option -->
+        <div class="payment-method" onclick="selectPaymentMethod('gpay')">
+          <div class="payment-method-header">
+            <input type="radio" id="gpay" name="paymentMethod" value="gpay">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTAFyk2Hu-hbJkgcF7nkVkuxTwwYZztsPc_wQ&s" alt="Google Pay" class="payment-method-logo">
+            <label for="gpay">Google Pay</label>
+          </div>
+          <div class="payment-details">
+            <div class="qr-code-container">
+              <p>Scan QR Code to Pay</p>
+              <div class="qr-code">
+                <img src="https://myonlinevipani.com/wp-content/uploads/2020/11/My-Online-Vipani-Google-Pay-QR-Code-300x300.jpg" alt="Google Pay QR Code">
+              </div>
+              <div class="upi-id">
+                <span>UPI ID: swiftbites@okbank</span>
+                <button class="copy-button" onclick="copyUPI('swiftbites@okbank')">Copy</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="security-badge">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 1L3 5V11C3 16.55 6.84 21.74 12 23C17.16 21.74 21 16.55 21 11V5L12 1Z" fill="#4CAF50"/>
+            <path d="M16 10L11 15L8 12" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Secure Payment Gateway
+        </div>
+
+        <button type="submit" class="animated-button payment-button" id="confirmPaymentBtn">Confirm Payment</button>
+      </form>
+
+      <div class="payment-success" id="paymentSuccess">
+        <h3>Payment Successful!</h3>
+        <p>Your order has been confirmed.</p>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // Form validation functions
+    function validateDeliveryForm() {
+      const name = document.getElementById('name').value.trim();
+      const address = document.getElementById('address').value.trim();
+      const city = document.getElementById('city').value.trim();
+      const zipCode = document.getElementById('zipCode').value.trim();
+      const phoneNumber = document.getElementById('phoneNumber').value.trim();
+
+      if (!name || !address || !city || !zipCode || !phoneNumber) {
+        showNotification('Please fill in all delivery details', 'error');
+        return false;
+      }
+
+      // Phone number validation
+      const phoneRegex = /^[0-9]{10}$/;
+      if (!phoneRegex.test(phoneNumber)) {
+        showNotification('Please enter a valid 10-digit phone number', 'error');
+        return false;
+      }
+
+      // Zip code validation
+      const zipRegex = /^[0-9]{6}$/;
+      if (!zipRegex.test(zipCode)) {
+        showNotification('Please enter a valid 6-digit zip code', 'error');
+        return false;
+      }
+
+      return true;
+    }
+
+    function validatePaymentForm() {
+      const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
+      
+      if (paymentMethod === 'creditCard') {
+        const cardNumber = document.querySelector('.payment-details input[placeholder*="Card number"]').value;
+        const expiryDate = document.querySelector('.payment-details input[placeholder*="Expiry"]').value;
+        const cvv = document.querySelector('.payment-details input[placeholder*="CVV"]').value;
+
+        // Card number validation
+        const cardRegex = /^[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}$/;
+        if (!cardRegex.test(cardNumber)) {
+          showNotification('Please enter a valid card number (format: 1234-5678-9012-3456)', 'error');
+          return false;
+        }
+
+        // Expiry date validation
+        const expiryRegex = /^(0[1-9]|1[0-2])\/([0-9]{2})$/;
+        if (!expiryRegex.test(expiryDate)) {
+          showNotification('Please enter a valid expiry date (format: MM/YY)', 'error');
+          return false;
+        }
+
+        // CVV validation
+        const cvvRegex = /^[0-9]{3}$/;
+        if (!cvvRegex.test(cvv)) {
+          showNotification('Please enter a valid 3-digit CVV', 'error');
+          return false;
+        }
+      }
+
+      return true;
+    }
+
+    function selectPaymentMethod(method) {
+      document.querySelectorAll('.payment-method').forEach(el => {
+        el.classList.remove('selected');
+      });
+      const selectedMethod = document.querySelector(`[value="${method}"]`);
+      if (selectedMethod) {
+        selectedMethod.closest('.payment-method').classList.add('selected');
+      }
+    }
+
+    async function copyUPI(upiId) {
+      try {
+        await navigator.clipboard.writeText(upiId);
+        showNotification('UPI ID copied to clipboard!', 'success');
+      } catch (err) {
+        showNotification('Failed to copy UPI ID', 'error');
+      }
+    }
+
+    function setLoadingState(button, isLoading) {
+      if (isLoading) {
+        button.disabled = true;
+        button.classList.add('button-loading');
+      } else {
+        button.disabled = false;
+        button.classList.remove('button-loading');
+      }
+    }
+
+    // API calls with proper error handling
+    async function saveDeliveryDetails() {
+      const formData = {
+        name: document.getElementById('name').value.trim(),
+        address: document.getElementById('address').value.trim(),
+        city: document.getElementById('city').value.trim(),
+        zipCode: document.getElementById('zipCode').value.trim(),
+        phoneNumber: document.getElementById('phoneNumber').value.trim()
+      };
+
+      try {
+        // Mock API call - replace with actual API endpoint when available
+        await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate network delay
+        
+        // Store delivery details in localStorage for persistence
+        localStorage.setItem('deliveryDetails', JSON.stringify(formData));
+        
+        showNotification('Delivery details saved successfully!', 'success');
+        return true;
+      } catch (error) {
+        console.error('Error saving delivery details:', error);
+        showNotification('Delivery details saved locally!', 'success');
+        return true;
+      }
+    }
+
+    async function processPayment() {
+      const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
+      let formData = { paymentMethod };
+
+      if (paymentMethod === 'creditCard') {
+        formData = {
+          ...formData,
+          cardNumber: document.querySelector('.payment-details input[placeholder*="Card number"]').value,
+          expiryDate: document.querySelector('.payment-details input[placeholder*="Expiry"]').value,
+          cvv: document.querySelector('.payment-details input[placeholder*="CVV"]').value
+        };
+      }
+
+      try {
+        // Mock API call - replace with actual API endpoint when available
+        await new Promise(resolve => setTimeout(resolve, 1500)); // Simulate network delay
+        
+        // Store payment details in localStorage for persistence
+        localStorage.setItem('paymentDetails', JSON.stringify(formData));
+        
+        showNotification('Payment processed successfully!', 'success');
+        return true;
+      } catch (error) {
+        console.error('Error processing payment:', error);
+        showNotification('Payment processed locally!', 'success');
+        return true;
+      }
+    }
+
+    // Form submission handlers
+    document.getElementById('deliveryForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const submitButton = this.querySelector('button');
+
+      if (!validateDeliveryForm()) {
+        return;
+      }
+
+      setLoadingState(submitButton, true);
+      const success = await saveDeliveryDetails();
+      setLoadingState(submitButton, false);
+
+      if (success) {
+        submitButton.classList.add('button-success');
+        setTimeout(() => {
+          submitButton.classList.remove('button-success');
+        }, 2000);
+      }
+    });
+
+    document.getElementById('paymentForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const submitButton = this.querySelector('button');
+
+      if (!validatePaymentForm()) {
+        return;
+      }
+
+      setLoadingState(submitButton, true);
+      const success = await processPayment();
+      setLoadingState(submitButton, false);
+
+      if (success) {
+        submitButton.classList.add('button-success');
+        document.getElementById('paymentSuccess').classList.add('show');
+        setTimeout(() => {
+          window.location.href = 'Thankyou.html';
+        }, 2000);
+      }
+    });
+
+    function showNotification(message, type = 'success') {
+      const existingNotification = document.querySelector('.notification');
+      if (existingNotification) {
+        existingNotification.remove();
+      }
+
+      const notification = document.createElement('div');
+      notification.className = `notification ${type}`;
+      notification.textContent = message;
+      document.body.appendChild(notification);
+
+      requestAnimationFrame(() => {
+        notification.classList.add('show');
+      });
+
+      setTimeout(() => {
+        notification.classList.remove('show');
+        setTimeout(() => {
+          if (document.body.contains(notification)) {
+            document.body.removeChild(notification);
+          }
+        }, 300);
+      }, 3000);
+    }
+
+    // Initialize first payment method as selected
+    document.querySelector('.payment-method').classList.add('selected');
+  </script>
+</body>
+</html>
+

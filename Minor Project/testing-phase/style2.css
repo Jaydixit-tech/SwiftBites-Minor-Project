@@ -1,0 +1,901 @@
+
+    /* 
+      ================
+      THEME COLORS
+      ================
+      - Saffron & subtle green theme
+      - Pastel sign-up & login button colors
+    */
+    :root {
+      --primary-color: #FF9933;    /* Saffron-Orange */
+      --secondary-color: #199122;  /* Subtle, aesthetic green */
+      --background-color: #FFF8ED; /* Warm off-white background */
+      --text-color: #333333;       /* Darker text for contrast */
+      --heading-color: #111111;    /* Even darker heading text */
+      --accent-color: #faae2b;     /* Accent orange */
+      --highlight-color: #d63384;  /* Pink highlight */
+
+      /* NEW button colors */
+      --sign-up-color: #EE9770;    /* Subtle pastel orange-pink for Sign Up */
+      --login-color: #70BEE9;      /* Soft pastel blue for Login */
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow-x: hidden;
+      background-color: var(--background-color);
+      color: var(--text-color);
+    }
+
+    body {
+      max-width: 1920px;
+      margin: 0 auto;
+    }
+
+    /* TOP NAV */
+    .top-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 40px;
+      background-color: var(--primary-color);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      font-weight: 800;
+      font-size: 20px;
+      color: #fff;
+    }
+
+    nav a {
+      text-decoration: none;
+      margin: 0 15px;
+      color: #fff;
+      font-weight: 500;
+    }
+
+    .auth {
+      display: flex;
+      gap: 10px;
+    }
+
+    .auth button {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      color: #fff;
+    }
+
+    .sign-up {
+      background: var(--sign-up-color);
+    }
+
+    .login {
+      background: var(--login-color);
+    }
+
+    .auth button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    /* HERO SECTION */
+    .hero {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 60px 80px;
+      flex-wrap: wrap;
+    }
+
+    /* Single line "Indian Cuisine" with Baloo Bhaina 2 font */
+    .main-title {
+      font-size: 48px;
+      font-weight: 800;
+      color: var(--heading-color);
+      font-family: 'Baloo Bhaina 2', cursive; /* Indian-style font */
+    }
+
+    .hero-text {
+      flex: 1;
+      min-width: 300px;
+      margin-bottom: 30px;
+    }
+
+    .hero-text p {
+      margin: 20px 0;
+      line-height: 1.6;
+    }
+
+    .hero-buttons {
+      margin-top: 20px;
+    }
+
+    .orange-btn, .black-btn {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-right: 10px;
+      transition: all 0.3s ease;
+    }
+
+    .orange-btn {
+      background: var(--accent-color);
+      color: white;
+    }
+
+    .black-btn {
+      background: var(--secondary-color);
+      color: white;
+    }
+
+    .orange-btn:hover, .black-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    .hero-image {
+      flex: 1;
+      min-width: 250px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* Circle style for hero image */
+    .main-img {
+      width: 250px;
+      height: 250px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 10px solid white;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
+
+    /* POPULAR DISHES */
+    .popular-dishes {
+      padding: 40px 80px;
+      background-color: #ececec;
+    }
+
+    .popular-dishes h2 {
+      margin-bottom: 30px;
+      font-size: 24px;
+      font-weight: 600;
+      color: var(--heading-color);
+    }
+
+    .dish-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .dish-card {
+      background: white;
+      border-radius: 12px;
+      padding: 10px;
+      width: 180px;
+      text-align: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .dish-card img {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 12px;
+    }
+
+    .dish-card h4 {
+      margin-top: 10px;
+      color: var(--heading-color);
+    }
+
+    .dish-card p {
+      font-size: 12px;
+      color: var(--text-color);
+    }
+
+    .dish-card .stars {
+      color: var(--accent-color);
+      font-size: 14px;
+    }
+
+    .dish-card a {
+      display: inline-block;
+      margin-top: 6px;
+      color: var(--accent-color);
+      font-size: 13px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .dish-card a:hover {
+      color: var(--highlight-color);
+      transform: scale(1.05);
+    }
+
+    /* ABOUT US */
+    .about {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 60px 80px;
+      flex-wrap: wrap;
+    }
+
+    .about-image {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex: 1;
+      min-width: 250px;
+      margin-bottom: 30px;
+    }
+
+    .about-text {
+      flex: 1;
+      min-width: 300px;
+    }
+
+    .about-text h2 {
+      color: var(--heading-color);
+    }
+
+    .about-text p {
+      margin: 20px 0;
+      line-height: 1.6;
+    }
+
+    /* Match .about-img exactly to .main-img styling */
+    .about-img {
+      width: 250px;
+      height: 250px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 10px solid white;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
+
+    /* DISCOVER SECTION */
+    .discover {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 60px 80px;
+      flex-wrap: wrap;
+    }
+
+    .discover-text {
+      flex: 1;
+      min-width: 300px;
+    }
+
+    .discover-text h2 {
+      color: var(--heading-color);
+      margin-bottom: 20px;
+    }
+
+    .discover-text p {
+      margin: 20px 0;
+      line-height: 1.6;
+    }
+
+    .discover-img {
+      width: 250px;
+      height: 250px;
+      object-fit: cover;
+      border-radius: 60% 0 60% 60%;
+      border: 10px solid white;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
+
+    /* FEATURED DISHES */
+    .featured-dishes {
+      padding: 2rem;
+      background-color: #f2f2f2;
+    }
+
+    .featured-dishes h2 {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+      color: var(--heading-color);
+      border-bottom: 2px solid var(--primary-color);
+      display: inline-block;
+    }
+
+    .dishes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .dishes-grid .dish-card img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    .dishes-grid .dish-card h3 {
+      font-size: 1.2rem;
+      margin: 0.5rem 0;
+      color: var(--heading-color);
+    }
+
+    .dishes-grid .dish-card .rating {
+      color: var(--accent-color);
+      font-size: 1.2rem;
+    }
+
+    .dishes-grid .dish-card p {
+      margin: 0.3rem 0;
+      color: var(--text-color);
+    }
+
+    .dishes-grid .dish-card a {
+      color: var(--highlight-color);
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s ease;
+    }
+
+    .dishes-grid .dish-card a:hover {
+      color: #e65100;
+    }
+
+    /* HOW TO ORDER */
+    .how-to-order {
+      background-color: #f0f0f0;
+      padding: 40px 20px;
+      font-family: 'Helvetica Neue', sans-serif;
+    }
+
+    .how-to-order h2 {
+      text-align: left;
+      font-size: 24px;
+      font-weight: 800;
+      margin-bottom: 30px;
+      color: var(--heading-color);
+    }
+
+    .order-steps {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+
+    .step-card {
+      background: white;
+      padding: 20px;
+      flex: 1;
+      min-width: 260px;
+      max-width: 300px;
+      border-radius: 6px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    .step-card .icon {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    .step-card h3 {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--heading-color);
+    }
+
+    .step-card p {
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--text-color);
+    }
+
+    /* CUSTOMER REVIEWS */
+    .customer-reviews {
+      background: #f0f0f0;
+      position: relative;
+      padding: 60px 20px;
+      text-align: center;
+      font-family: 'Helvetica Neue', sans-serif;
+    }
+
+    .wave-top {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100px;
+    }
+
+    .customer-reviews h2 {
+      font-size: 24px;
+      font-weight: 800;
+      margin-bottom: 40px;
+      position: relative;
+      z-index: 1;
+      color: var(--heading-color);
+    }
+
+    .reviews-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 40px;
+      justify-content: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .review-card {
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+      width: 300px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      position: relative;
+    }
+
+    .review-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+
+    .review-content {
+      padding: 15px;
+      background: white;
+      text-align: left;
+      position: relative;
+      top: -20px;
+      margin: 0 10px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .profile-pic {
+      width: 40px;
+      height: 40px;
+      margin-bottom: 8px;
+    }
+
+    .profile-pic img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .stars {
+      color: var(--accent-color);
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    .review-content p {
+      font-size: 14px;
+      color: var(--text-color);
+      line-height: 1.5;
+    }
+
+    @media (max-width: 768px) {
+      .hero {
+        flex-direction: column;
+        padding: 40px 20px;
+      }
+
+      .hero-image {
+        margin-top: 20px;
+      }
+
+      .dish-grid {
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .featured-dishes {
+        padding: 1rem;
+      }
+
+      .dish-card img {
+        height: 120px;
+      }
+
+      .dish-card h3 {
+        font-size: 1rem;
+      }
+    }
+
+    /* EMAIL SUBSCRIPTION */
+    .subscribe-section {
+      background-image: url('email-banner.jpg'); /* replace with your actual image path */
+      background-size: cover;
+      background-position: center;
+      padding: 60px 20px;
+      text-align: center;
+      color: var(--secondary-color);
+      position: relative;
+    }
+
+    .subscribe-content h2 {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 20px;
+      color: #000000;
+      text-shadow: none;
+      line-height: 1.4;
+    }
+
+    .subscribe-form {
+      display: flex;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .subscribe-form input {
+      flex: 1;
+      padding: 12px 16px;
+      border: none;
+      outline: none;
+      font-size: 16px;
+    }
+
+    .subscribe-form button {
+      background: var(--primary-color);
+      color: white;
+      padding: 12px 24px;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      letter-spacing: 2px;
+      transition: all 0.3s ease;
+    }
+
+    .subscribe-form button:hover {
+      background: var(--highlight-color);
+      transform: scale(1.05);
+    }
+
+    /* FOOTER */
+    .footer {
+      background-color: var(--secondary-color);
+      color: white;
+      padding: 40px 20px 20px;
+      font-family: 'Helvetica Neue', sans-serif;
+    }
+
+    .footer-content {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 40px;
+      margin-bottom: 20px;
+    }
+
+    .footer-col {
+      flex: 1 1 200px;
+    }
+
+    .footer-col h4 {
+      font-size: 16px;
+      margin-bottom: 15px;
+      font-weight: 600;
+    }
+
+    .footer-col ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .footer-col ul li {
+      margin-bottom: 10px;
+    }
+
+    .footer-col ul li a {
+      color: #ccc;
+      text-decoration: none;
+    }
+
+    .footer-col p {
+      font-size: 14px;
+      color: #ddd;
+      line-height: 1.6;
+    }
+
+    .footer-col.brand h3 {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+
+    .highlight {
+      color: var(--primary-color);
+    }
+
+    .social-icons a img {
+      width: 20px;
+      margin-right: 10px;
+    }
+
+    .footer-bottom {
+      text-align: center;
+      border-top: 1px solid #444;
+      padding-top: 10px;
+      font-size: 14px;
+      color: #c7c3c3;
+    }
+
+    /* ============================
+       Modal + Overlay for Login
+       ============================ */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      backdrop-filter: blur(6px);
+      background: rgba(0, 0, 0, 0.3);
+      display: none;         /* <-- Initially hidden */
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;         /* Make sure it's on top */
+      /* We'll give the overlay a short fade-in animation */
+      animation: fadeInOverlay 0.5s forwards;
+    }
+
+    @keyframes fadeInOverlay {
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+
+    .modal {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(20px);
+      border-radius: 16px;
+      padding: 40px 50px;
+      width: 420px;
+      position: relative;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      color: #fff;
+      /* Animate the modal itself popping in */
+      animation: slideDown 0.6s ease forwards;
+      transform: translateY(-50px);
+      opacity: 0;
+    }
+
+    @keyframes slideDown {
+      0% {
+        opacity: 0;
+        transform: translateY(-50px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: linear-gradient(45deg, #c31432, #240b36);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 28px;
+      height: 28px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .close-btn:hover {
+      transform: scale(1.1);
+    }
+
+    .modal h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .modal label {
+      font-size: 14px;
+      margin-top: 10px;
+      display: block;
+    }
+
+    .modal input[type="email"],
+    .modal input[type="password"],
+    .modal input[type="text"] {
+      width: 100%;
+      padding: 12px;
+      margin-top: 5px;
+      border: none;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.15);
+      color: white;
+      outline: none;
+    }
+
+    .options {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      margin: 10px 0;
+    }
+
+    .options a {
+      color: white;
+      text-decoration: none;
+    }
+
+    .action-btn {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      background: linear-gradient(to right, #ff416c, #ff4b2b);
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      overflow: hidden;
+      position: relative;
+      transition: transform 0.3s ease;
+    }
+
+    /* Add an active or press-down effect for the action button */
+    .action-btn:active {
+      transform: scale(0.96);
+    }
+
+    /* Optional fancy hover glow effect for the action button */
+    .action-btn:hover {
+      box-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
+    }
+
+    /* Fade-in animation when toggling forms */
+    .fade-in {
+      animation: fadeInForm 0.5s ease forwards;
+      opacity: 0;
+    }
+
+    @keyframes fadeInForm {
+      0% {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .modal p {
+      text-align: center;
+      font-size: 13px;
+      margin-top: 15px;
+    }
+
+    .modal a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    nav a {
+  text-decoration: none;
+  margin: 0 15px;
+  color: #fff;
+  font-weight: 500;
+  position: relative;
+  display: inline-block;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+nav a::after {
+  content: '';
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  bottom: -4px;
+  left: 0;
+  background-color: white;
+  transition: width 0.3s ease;
+}
+
+nav a:hover {
+  transform: scale(1.1);
+  color: #ffe5b4;
+}
+
+nav a:hover::after {
+  width: 100%;
+}
+
+/* ADD TO CART BUTTON STYLING */
+.add-to-cart-btn {
+  background-color: #f7931e;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 15px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.85rem;
+  transition: all 0.3s ease;
+  margin-left: 2px;
+}
+
+.quantity-selector {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+  gap: 8px;
+}
+
+.quantity-btn {
+  background-color: #f0f0f0;
+  border: none;
+  color: #333;
+  padding: 0;
+  cursor: pointer;
+  font-size: 1.2rem;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.quantity-display {
+  font-weight: 600;
+  min-width: 24px;
+  text-align: center;
+  font-size: 1rem;
+}
+
+.minus-btn {
+  background-color: #ff6b6b;
+  color: white;
+}
+
+.plus-btn {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.quantity-btn:hover, .add-to-cart-btn:hover {
+  transform: scale(1.05);
+  opacity: 0.9;
+}
+
+/* TEST  CSS CODE  -- */
+h2{
+  color: #111111;
+}
