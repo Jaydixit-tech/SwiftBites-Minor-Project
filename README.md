@@ -1,104 +1,15 @@
-# SWIFTBITES - Indian Cuisine Website
 
-A modern, interactive website for SWIFTBITES Indian restaurant, featuring 3D food models and animations.
+# 💻 Tech Stack:
+![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white) ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E) ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54) ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white) ![AWS](https://img.shields.io/badge/AWS-%23FF9900.svg?style=for-the-badge&logo=amazon-aws&logoColor=white) ![Next JS](https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white) ![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white) ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB) ![Apache Maven](https://img.shields.io/badge/Apache%20Maven-C71A36?style=for-the-badge&logo=Apache%20Maven&logoColor=white) ![MicrosoftSQLServer](https://img.shields.io/badge/Microsoft%20SQL%20Server-CC2927?style=for-the-badge&logo=microsoft%20sql%20server&logoColor=white) ![Figma](https://img.shields.io/badge/figma-%23F24E1E.svg?style=for-the-badge&logo=figma&logoColor=white)
+# 📊 GitHub Stats:
+![](https://github-readme-stats.vercel.app/api?username=jay&theme=dark&hide_border=false&include_all_commits=true&count_private=false)<br/>
+![](https://nirzak-streak-stats.vercel.app/?user=jay&theme=dark&hide_border=false)<br/>
+![](https://github-readme-stats.vercel.app/api/top-langs/?username=jay&theme=dark&hide_border=false&include_all_commits=true&count_private=false&layout=compact)
 
-## Features
+---
+[![](https://visitcount.itsvg.in/api?id=jay&icon=0&color=0)](https://visitcount.itsvg.in)
 
-- Interactive 3D food models using Three.js and React Three Fiber
-- Smooth animations with Framer Motion
-- Responsive design for all devices
-- Modern UI with styled-components
-- Interactive menu items with 3D previews
-- Animated social media icons
-- Custom scrollbar and loading states
-
-## Prerequisites
-
-- Node.js (v14 or higher)
-- npm or yarn
-
-## Installation
-
-1. Clone the repository:
-```bash
-git clone https://github.com/yourusername/swiftbites.git
-cd swiftbites
-```
-
-2. Install dependencies:
-```bash
-npm install
-# or
-yarn install
-```
-
-3. Start the development server:
-```bash
-npm start
-# or
-yarn start
-```
-
-The application will open in your default browser at `http://localhost:3000`.
-
-## Project Structure
-
-```
-src/
-  ├── components/
-  │   ├── HeroSection.js
-  │   ├── MenuSection.js
-  │   ├── AboutSection.js
-  │   └── Footer.js
-  ├── styles/
-  │   └── global.css
-  ├── App.js
-  └── index.js
-public/
-  ├── models/
-  │   ├── indian_food.glb
-  │   ├── butter_chicken.glb
-  │   ├── biryani.glb
-  │   └── paneer_tikka.glb
-  └── index.html
-```
-
-## Technologies Used
-
-- React
-- Three.js
-- React Three Fiber
-- Framer Motion
-- styled-components
-- React Icons
-
-## Adding 3D Models
-
-1. Place your 3D models in the `public/models/` directory
-2. Models should be in GLB/GLTF format
-3. Update the model paths in the respective components
-
-## Customization
-
-- Colors: Edit the color variables in the styled components
-- Animations: Adjust animation parameters in Framer Motion components
-- 3D Models: Replace the existing models with your own
-- Content: Update text content in the components
-
-## Deployment
-
-Build the project:
-```bash
-npm run build
-# or
-yarn build
-```
-
-The build files will be in the `build/` directory, ready for deployment.
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
+<!-- Proudly created with GPRM ( https://gprm.itsvg.in ) -->
 
 ## Acknowledgments
 
