@@ -13,6 +13,15 @@
 
 ## Acknowledgments
 
-- Three.js community
-- React Three Fiber team
-- Framer Motion team 
+SwiftBites is a responsive food delivery web application built using HTML, CSS, JavaScript, and Python. It allows users to browse menus, place orders, and track deliveries in real time.
+
+🔧 Features:
+User registration and login
+
+Interactive menu with search & filter
+
+Cart and order management
+
+Admin panel for restaurant management
+
+Clean UI and responsive design
