@@ -13,15 +13,17 @@
 
 ## Acknowledgments
 
-SwiftBites is a responsive food delivery web application built using HTML, CSS, JavaScript, and Python. It allows users to browse menus, place orders, and track deliveries in real time.
+# 🥡 SwiftBites – Food Delivery Website
 
-🔧 Features:
-#User registration and login
+SwiftBites is a modern and responsive food delivery web application designed to make online ordering simple and fast. It provides a user-friendly interface for customers and a management panel for administrators.
 
-#Interactive menu with search & filter
+---
 
-#Cart and order management
+## 🚀 Features
 
-#Admin panel for restaurant management
-
-#Clean UI and responsive design
+- 🍔 User registration and login
+- 📋 Browse and search menu items
+- 🛒 Add to cart and manage orders
+- 📦 Track delivery status (planned)
+- ⚙️ Admin dashboard for restaurant management
+- 💻 Responsive design for mobile and desktop
